@@ -809,14 +809,12 @@ if (!isset($_SESSION['cart'])) {
 
         // Continue Booking
         function continueBooking() {
-            window.location.href = 'booking.php';
+            window.location.href = 'booking.php?from_cart=1';
         }
 
-        // Pick Up For Later
+        // Pick Up For Later - go to cart page
         function pickUpLater() {
-            const cartMenu = document.getElementById('cartMenu');
-            cartMenu.classList.remove('active');
-            alert('Your items are saved! Continue browsing and come back to your cart anytime.');
+            window.location.href = 'cart.php';
         }
     </script>
 </body>

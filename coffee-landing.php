@@ -491,7 +491,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <img src="images/commercialcoffee-png.png" alt="Iced Bat Brew">
                     <div class="tag tag-cappuccino">The Bat Brew</div>
                     <div class="tag tag-rating">4.8 ⭐</div>
-                    <div class="tag tag-sales">18K</div>
+                    <div class="tag tag-sales" style="top: 50%;">The Signature Coffee of the<br>Bat Cave Cafe</div>
                 </div>
             </div>
         </div>
@@ -1014,14 +1014,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Continue Booking - redirect to booking page
         function continueBooking() {
-            window.location.href = 'booking.php';
+            window.location.href = 'booking.php?from_cart=1';
         }
 
-        // Pick Up For Later - close cart and continue browsing
+        // Pick Up For Later - go to cart page
         function pickUpLater() {
-            const cartMenu = document.getElementById('cartMenu');
-            cartMenu.classList.remove('active');
-            alert('Your items are saved! Continue browsing and come back to your cart anytime.');
+            window.location.href = 'cart.php';
         }
     </script>
 

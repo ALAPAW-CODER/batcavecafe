@@ -1,12 +1,6 @@
 <?php
 session_start();
 
-// Check if user is logged in
-if (!isset($_SESSION['isLoggedIn']) && !isset($_SESSION['isAdmin'])) {
-    header('Location: login.php');
-    exit();
-}
-
 // Initialize cart
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
@@ -26,35 +20,151 @@ if (!isset($_SESSION['cart'])) {
         /* Booking Page Styles */
         .booking-page {
             min-height: 100vh;
-            background: linear-gradient(180deg, rgba(10, 8, 6, 0.98) 0%, rgba(15, 12, 9, 0.98) 50%, rgba(12, 9, 7, 0.98) 100%);
-            padding: 100px 20px 50px;
+            background: linear-gradient(180deg, rgba(10, 8, 6, 0.6) 0%, rgba(15, 12, 9, 0.6) 50%, rgba(12, 9, 7, 0.6) 100%), url('images/bgbooking1.png');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 100px 20px 0;
         }
 
         .booking-container {
-            max-width: 900px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
+        .booking-content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .booking-content-wrapper.with-cart {
+            grid-template-columns: 400px 1fr 1fr;
+        }
+
         .booking-header {
-            text-align: center;
-            margin-bottom: 40px;
-            color: #e8d5c4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        .booking-coffee-img {
+            width: 300px;
+            height: auto;
+            flex-shrink: 0;
+            animation: zoomInOut 4s ease-in-out infinite;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .booking-coffee-img:hover {
+            animation-play-state: paused;
+            transform: scale(1.05);
+            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.4));
+        }
+
+        @keyframes zoomInOut {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes wiggle {
+            0%, 100% {
+                transform: rotate(0deg) translateY(0px);
+            }
+            25% {
+                transform: rotate(-3deg) translateY(-5px);
+            }
+            50% {
+                transform: rotate(0deg) translateY(0px);
+            }
+            75% {
+                transform: rotate(3deg) translateY(-5px);
+            }
+        }
+
+        .booking-text-box {
+            background: #e8d4a8;
+            border: 5px solid #1a1a1a;
+            border-radius: 60px;
+            padding: 30px 70px;
+            box-shadow: 8px 8px 0px #1a1a1a;
+            flex: 1;
+            max-width: 900px;
         }
 
         .booking-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
+            font-family: 'Donau', 'Arial Black', sans-serif;
+            font-size: 36px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 0px;
+            line-height: 1.3;
         }
 
         .booking-header p {
-            font-size: 1.1rem;
-            color: #d4c4b0;
+            text-align: center;
+            margin: 10px 0 0 0;
+            color: #2c1810;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .coffee-beans-top {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .coffee-beans-top .bean {
+            font-size: 25px;
+            opacity: 0.4;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        .coffee-beans-top .bean:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .coffee-beans-top .bean:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .coffee-beans-top .bean:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         /* Form Container */
         .booking-form-wrapper {
-            background: rgba(255, 255, 255, 0.95);
+            background: #e8d4a8;
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
@@ -118,7 +228,7 @@ if (!isset($_SESSION['cart'])) {
 
         /* Price Display */
         .price-display {
-            background: #f9fafb;
+            background: rgba(255, 224, 185, 0.9);
             padding: 20px;
             border-radius: 10px;
             margin: 20px 0;
@@ -139,7 +249,7 @@ if (!isset($_SESSION['cart'])) {
 
         /* Payment Section */
         .payment-section {
-            background: #f9fafb;
+            background: rgba(255, 224, 185, 0.9);
             padding: 30px;
             border-radius: 15px;
             margin-top: 30px;
@@ -230,7 +340,7 @@ if (!isset($_SESSION['cart'])) {
 
         /* Buttons */
         .btn-primary {
-            background: linear-gradient(135deg, #d4b896 0%, #c9964c 100%);
+            background: linear-gradient(135deg, #8B4513 0%, #654321 100%);
             color: white;
             padding: 15px 40px;
             border: none;
@@ -256,11 +366,11 @@ if (!isset($_SESSION['cart'])) {
 
         /* Map Section */
         .map-section {
-            background: rgba(255, 255, 255, 0.95);
+            background: #e8d4a8;
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
-            margin-top: 30px;
+            height: fit-content;
         }
 
         .map-section h3 {
@@ -271,9 +381,88 @@ if (!isset($_SESSION['cart'])) {
 
         .map-section iframe {
             width: 100%;
-            height: 450px;
+            height: 500px;
             border: none;
             border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: perspective(1000px) rotateY(5deg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .map-section iframe:hover {
+            transform: perspective(1000px) rotateY(0deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Cart Items Column in Booking */
+        .booking-cart-section {
+            background: #e8d4a8;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .booking-cart-section.show {
+            display: block;
+        }
+
+        .booking-cart-section h3 {
+            color: #2c1810;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 3px solid #d4b896;
+            padding-bottom: 15px;
+        }
+
+        .booking-cart-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: #f5ecd7;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .booking-cart-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .booking-cart-item-details {
+            flex: 1;
+        }
+
+        .booking-cart-item-name {
+            font-weight: 600;
+            color: #2c1810;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .booking-cart-item-price {
+            color: #d4b896;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .booking-cart-item-qty {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .booking-cart-total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #d4b896;
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c1810;
         }
 
         /* Success Modal */
@@ -342,10 +531,91 @@ if (!isset($_SESSION['cart'])) {
             margin-top: 20px;
         }
 
+        /* Design Under Image */
+        .design-under-wrapper {
+            margin: 30px 0 0 0;
+            padding: 0;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            width: 100vw;
+            height: 150px;
+            background-image: url('images/design under.png');
+            background-repeat: repeat-x;
+            background-size: auto 100%;
+            background-position: center;
+            opacity: 0.9;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            display: block;
+        }
+
+        .design-under-wrapper img {
+            display: none;
+        }
+
+        /* Dark Mode Styles for Booking Header */
+        body.dark-mode .booking-text-box {
+            background: #2d2d2d;
+            border-color: #404040;
+            box-shadow: 8px 8px 0px #404040;
+        }
+
+        body.dark-mode .booking-header h1 {
+            color: #e5e5e5;
+        }
+
+        body.dark-mode .booking-header p {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .booking-coffee-img {
+            filter: drop-shadow(0 5px 15px rgba(255, 255, 255, 0.1));
+        }
+
+        body.dark-mode .booking-coffee-img:hover {
+            filter: drop-shadow(0 8px 20px rgba(255, 255, 255, 0.15));
+        }
+
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .booking-content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .map-section iframe {
+                transform: none;
+            }
+
+            .map-section iframe:hover {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .booking-container {
+                max-width: 100%;
+            }
+        }
+
         @media (max-width: 768px) {
+            .booking-header {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .booking-coffee-img {
+                width: 200px;
+            }
+
+            .booking-text-box {
+                padding: 25px 40px;
+            }
+
             .booking-header h1 {
-                font-size: 2rem;
+                font-size: 28px;
+            }
+
+            .booking-header p {
+                font-size: 14px;
             }
 
             .booking-form-wrapper {
@@ -370,8 +640,20 @@ if (!isset($_SESSION['cart'])) {
                 padding: 80px 15px 30px;
             }
 
+            .booking-coffee-img {
+                width: 150px;
+            }
+
+            .booking-text-box {
+                padding: 20px 30px;
+            }
+
             .booking-header h1 {
-                font-size: 1.5rem;
+                font-size: 22px;
+            }
+
+            .booking-header p {
+                font-size: 13px;
             }
 
             .booking-form-wrapper {
@@ -394,17 +676,68 @@ if (!isset($_SESSION['cart'])) {
                 <li><a href="booking.php" class="active">Booking</a></li>
             </ul>
             <div class="nav-actions">
+                <!-- Cart Dropdown -->
                 <div class="cart-dropdown">
-                    <button class="cart-btn" id="cartBtn">
+                    <button class="cart-btn" onclick="toggleCart()">
                         <i class="fa-solid fa-cart-shopping fa-xl"></i>
-                        <span class="cart-count" id="cartCount">0</span>
+                        <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
+                            <span class="cart-count"><?php echo count($_SESSION['cart']); ?></span>
+                        <?php endif; ?>
                     </button>
+                    <div class="cart-menu" id="cartMenu">
+                        <div class="cart-header">
+                            <h3>Shopping Cart</h3>
+                        </div>
+                        <?php if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])): ?>
+                            <div class="empty-cart">
+                                <div class="empty-cart-icon">🛒</div>
+                                <p>Your cart is empty</p>
+                            </div>
+                        <?php else: ?>
+                            <div class="cart-items">
+                                <?php
+                                $total = 0;
+                                foreach ($_SESSION['cart'] as $index => $item):
+                                    $subtotal = $item['price'] * $item['quantity'];
+                                    $total += $subtotal;
+                                ?>
+                                    <div class="cart-item">
+                                        <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="cart-item-image">
+                                        <div class="cart-item-details">
+                                            <div class="cart-item-name"><?php echo htmlspecialchars($item['name']); ?></div>
+                                            <div class="cart-item-price">₱<?php echo number_format($item['price'], 0); ?></div>
+                                            <div class="cart-item-quantity">
+                                                <button class="qty-btn" onclick="updateQuantity(<?php echo $index; ?>, -1)">-</button>
+                                                <span><?php echo $item['quantity']; ?></span>
+                                                <button class="qty-btn" onclick="updateQuantity(<?php echo $index; ?>, 1)">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="cart-footer">
+                                <div class="cart-total">
+                                    <span>Total:</span>
+                                    <span>₱<?php echo number_format($total, 0); ?></span>
+                                </div>
+                                <div class="cart-action-buttons">
+                                    <button class="checkout-btn" onclick="continueBooking()">Continue Booking</button>
+                                    <button class="pickup-later-btn" onclick="pickUpLater()">Pick Up For Later</button>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                 </div>
+                
                 <div class="profile-dropdown">
                     <button class="profile-btn" id="profileBtn">
                         <i class="fa-solid fa-user fa-xl"></i>
                     </button>
                 </div>
+                <!-- Dark Mode Toggle -->
+                <button type="button" class="dark-mode-btn" id="darkModeBtn" onclick="toggleDarkMode(); return false;" title="Switch to Dark Mode">
+                    <i id="darkModeIcon" class="fa-solid fa-moon fa-2xl"></i>
+                </button>
             </div>
         </nav>
     </header>
@@ -413,12 +746,47 @@ if (!isset($_SESSION['cart'])) {
     <div class="booking-page">
         <div class="booking-container">
             <div class="booking-header">
-                <h1>Reserve Your Spot</h1>
-                <p>Book your table and enjoy the perfect study or event space</p>
+                <img src="images/reserve.png" alt="Reserve" class="booking-coffee-img">
+                <div class="booking-text-box">
+                    <h1>Reserve Your Spot</h1>
+                    <p>Book your table and enjoy the perfect study or event space</p>
+                </div>
+            </div>
+            <div class="coffee-beans-top">
+                <span class="bean">☕</span>
+                <span class="bean">☕</span>
+                <span class="bean">☕</span>
             </div>
 
-            <!-- Booking Form -->
-            <div class="booking-form-wrapper">
+            <div class="booking-content-wrapper<?php echo (!empty($_SESSION['cart']) && isset($_GET['from_cart'])) ? ' with-cart' : ''; ?>">
+                <!-- Cart Items Column (only show if from cart) -->
+                <?php if (!empty($_SESSION['cart']) && isset($_GET['from_cart'])): ?>
+                <div class="booking-cart-section show">
+                    <h3>Your Order</h3>
+                    <?php
+                    $total = 0;
+                    foreach ($_SESSION['cart'] as $item):
+                        $subtotal = $item['price'] * $item['quantity'];
+                        $total += $subtotal;
+                    ?>
+                        <div class="booking-cart-item">
+                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
+                            <div class="booking-cart-item-details">
+                                <div class="booking-cart-item-name"><?php echo htmlspecialchars($item['name']); ?></div>
+                                <div class="booking-cart-item-price">₱<?php echo number_format($item['price'], 0); ?></div>
+                                <div class="booking-cart-item-qty">Qty: <?php echo $item['quantity']; ?></div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    <div class="booking-cart-total">
+                        <span>Total:</span>
+                        <span>₱<?php echo number_format($total, 0); ?></span>
+                    </div>
+                </div>
+                <?php endif; ?>
+                
+                <!-- Left Column: Booking Form -->
+                <div class="booking-form-wrapper">
                 <h2>Reservation Details</h2>
                 <form id="bookingForm">
                     <div class="form-grid">
@@ -549,20 +917,109 @@ if (!isset($_SESSION['cart'])) {
                         </div>
                     </div>
                 </div>
+                </div>
+
+                <!-- Right Column: Google Maps Section -->
+                <div class="map-section">
+                    <h3><i class="fa-solid fa-location-dot"></i> Find Us Here</h3>
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!4v1731740000000!6m8!1m7!1sCAoSLEFGMVFpcE1PWjNkdm5HMUJZb2Z1MHRmTUhsRGdYNzBnb1FjOEJqVkVZSWpI!2m2!1d14.0449448!2d121.1559532!3f0!4f0!5f0.7820865974627469"
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
             </div>
 
-            <!-- Google Maps Section -->
-            <div class="map-section">
-                <h3><i class="fa-solid fa-location-dot"></i> Find Us Here</h3>
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!4v1731740000000!6m8!1m7!1sCAoSLEFGMVFpcE1PWjNkdm5HMUJZb2Z1MHRmTUhsRGdYNzBnb1FjOEJqVkVZSWpI!2m2!1d14.0449448!2d121.1559532!3f0!4f0!5f0.7820865974627469"
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+            <!-- Design Under Image -->
+            <div class="design-under-wrapper">
+                <img src="images/design under.png" alt="Design">
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer-main">
+        <div class="footer-container">
+            <!-- Main Footer Content -->
+            <div class="footer-grid">
+                <!-- Brand Section -->
+                <div class="footer-brand">
+                    <div class="footer-logo-group">
+                        <img src="images/logo.png" alt="The Malvar Bat Cave Cafe Logo">
+                        <span class="footer-brand-name">The Malvar Bat<br>Cave Cafe</span>
+                    </div>
+                    <p class="footer-description">
+                        The premier late-night study, social, and coffee spot near BatStateU Malvar Campus. Your sanctuary for exceptional brews and warm connections.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-column">
+                    <h3 class="footer-heading">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="coffee-landing.php">Home</a></li>
+                        <li><a href="special-menu.php">Menu</a></li>
+                        <li><a href="booking.php">Booking</a></li>
+                    </ul>
+                </div>
+
+                <!-- Information -->
+                <div class="footer-column">
+                    <h3 class="footer-heading">Information</h3>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="privacy-policy.php">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="footer-column">
+                    <h3 class="footer-heading">Contact & Hours</h3>
+                    <p class="footer-contact">📍 Malvar, Batangas State University Area</p>
+                    <p class="footer-contact">📞 09636996688</p>
+                    <p class="footer-contact">📧 info@malvarbatcavecafe.com</p>
+                    <p class="footer-contact">⏰ Mon - Sun: 1:00 PM - 1:00 AM</p>
+                </div>
+            </div>
+
+            <!-- Footer Divider -->
+            <div class="footer-divider"></div>
+
+            <!-- Bottom Section -->
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    © 2025 The Malvar Bat Cave Cafe. All rights reserved.
+                </p>
+
+                <!-- Social Links -->
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="TikTok">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Success Modal -->
     <div class="success-modal" id="successModal">
@@ -705,6 +1162,48 @@ if (!isset($_SESSION['cart'])) {
         // Add event listeners for time calculation
         document.getElementById('startTime').addEventListener('change', calculatePrice);
         document.getElementById('endTime').addEventListener('change', calculatePrice);
+
+        // Cart Functions
+        function toggleCart() {
+            const cartMenu = document.getElementById('cartMenu');
+            cartMenu.classList.toggle('active');
+        }
+
+        function updateQuantity(index, change) {
+            const formData = new FormData();
+            formData.append('index', index);
+            formData.append('change', change);
+
+            fetch('update-cart.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                }
+            });
+        }
+
+        function continueBooking() {
+            // Already on booking page, just close cart
+            toggleCart();
+        }
+
+        function pickUpLater() {
+            window.location.href = 'cart.php';
+        }
+
+        // Close cart when clicking outside
+        document.addEventListener('click', function(event) {
+            const cartMenu = document.getElementById('cartMenu');
+            const cartBtn = document.querySelector('.cart-btn');
+            
+            if (!cartBtn.contains(event.target) && !cartMenu.contains(event.target)) {
+                cartMenu.classList.remove('active');
+            }
+        });
     </script>
 </body>
 </html>

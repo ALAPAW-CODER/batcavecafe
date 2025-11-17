@@ -56,7 +56,7 @@ $menuItems = [
     ],
     'meals' => [
         ['name' => 'Creamy Carbonara', 'price' => 185, 'image' => 'images/creamy carbonara.jpg', 'desc' => 'Rich and savory pasta coated in a creamy white sauce with bacon bits and parmesan.'],
-        ['name' => 'Spaghetti', 'price' => 175, 'image' => 'images/spaghetti.jpg', 'desc' => 'Classic Filipino-style sweet and savory spaghetti topped with ground meat and cheese.'],
+        ['name' => 'Spaghetti', 'price' => 175, 'image' => 'images/spaghetti.png', 'desc' => 'Classic Filipino-style sweet and savory spaghetti topped with ground meat and cheese.'],
         ['name' => 'Bulgogi Rice Bowl', 'price' => 195, 'image' => 'images/bulgogi rice bowl.jpg', 'desc' => 'Korean-inspired beef slices marinated in sweet soy-garlic sauce, served over steamed rice.'],
         ['name' => 'Chicken Fillet Rice Bowl', 'price' => 185, 'image' => 'images/chicken fillet.jpg', 'desc' => 'Crispy golden chicken fillet paired with rice and a side of special house gravy.'],
         ['name' => 'Chicken Teriyaki Rice Bowl', 'price' => 195, 'image' => 'images/chicken teriyaki rice.jpg', 'desc' => 'Grilled chicken glazed with teriyaki sauce, served with steamed rice and vegetables.'],
@@ -515,7 +515,10 @@ $menuItems = [
             </div>
 
             <!-- Hot Coffee Section -->
-            <h3 class="category-title" data-category="hot-coffee">Hot Coffee</h3>
+            <div class="category-header">
+                <h3 class="category-title" data-category="hot-coffee">Hot Coffee</h3>
+                <p class="category-description">Warm, bold, and comforting — our hot coffee selection is brewed to energize your day with rich flavors in every sip.</p>
+            </div>
             <div class="menu-grid" data-category="hot-coffee">
                 <?php foreach ($menuItems['hot-coffee'] as $item): ?>
                     <a href="#" data-category="hot-coffee" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
@@ -548,7 +551,10 @@ $menuItems = [
             </div>
 
             <!-- Iced Coffee Section -->
-            <h3 class="category-title" data-category="iced-coffee">Iced Coffee</h3>
+            <div class="category-header">
+                <h3 class="category-title" data-category="iced-coffee">Iced Coffee</h3>
+                <p class="category-description">Chilled, refreshing, and handcrafted — our iced coffee lineup delivers smooth, satisfying blends perfect for any weather.</p>
+            </div>
             <div class="menu-grid" data-category="iced-coffee">
                 <?php foreach ($menuItems['iced-coffee'] as $item): ?>
                     <a href="#" data-category="iced-coffee" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
@@ -581,7 +587,10 @@ $menuItems = [
             </div>
 
             <!-- Frappe Section -->
-            <h3 class="category-title" data-category="frappe">Frappe</h3>
+            <div class="category-header">
+                <h3 class="category-title" data-category="frappe">Frappe</h3>
+                <p class="category-description">Blended to perfection — our frappés offer creamy, icy indulgence with every refreshing sip.</p>
+            </div>
             <div class="menu-grid" data-category="frappe">
                 <?php foreach ($menuItems['frappe'] as $item): ?>
                     <a href="#" data-category="frappe" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
@@ -614,7 +623,10 @@ $menuItems = [
             </div>
 
             <!-- Pastries Section -->
-            <h3 class="category-title" data-category="pastries">Pastries</h3>
+            <div class="category-header">
+                <h3 class="category-title" data-category="pastries">Pastries</h3>
+                <p class="category-description">Freshly baked and irresistible — our pastries bring the perfect touch of sweetness to your cafe experience.</p>
+            </div>
             <div class="menu-grid" data-category="pastries">
                 <?php foreach ($menuItems['pastries'] as $item): ?>
                     <a href="#" data-category="pastries" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
@@ -645,7 +657,10 @@ $menuItems = [
             </div>
 
             <!-- Snacks Section -->
-            <h3 class="category-title" data-category="snacks">Snacks</h3>
+            <div class="category-header">
+                <h3 class="category-title" data-category="snacks">Snacks</h3>
+                <p class="category-description">Quick bites made tasty — enjoy delicious, easy-to-love snacks that pair perfectly with your favorite drinks.</p>
+            </div>
             <div class="menu-grid" data-category="snacks">
                 <?php foreach ($menuItems['snacks'] as $item): ?>
                     <a href="#" data-category="snacks" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
@@ -676,7 +691,10 @@ $menuItems = [
             </div>
 
             <!-- Meals Section -->
-            <h3 class="category-title" data-category="meals">Pasta & Rice Bowls</h3>
+            <div class="category-header">
+                <h3 class="category-title" data-category="meals">Pasta & Rice Bowls</h3>
+                <p class="category-description">Hearty and flavorful — our meals are crafted to satisfy your cravings, whether you're here for lunch or dinner.</p>
+            </div>
             <div class="menu-grid" data-category="meals">
                 <?php foreach ($menuItems['meals'] as $item): ?>
                     <a href="#" data-category="meals" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
@@ -1061,14 +1079,12 @@ $menuItems = [
 
         // Continue Booking - redirect to booking page
         function continueBooking() {
-            window.location.href = 'booking.php';
+            window.location.href = 'booking.php?from_cart=1';
         }
 
-        // Pick Up For Later - close cart and continue browsing
+        // Pick Up For Later - go to cart page
         function pickUpLater() {
-            const cartMenu = document.getElementById('cartMenu');
-            cartMenu.classList.remove('active');
-            alert('Your items are saved! Continue browsing and come back to your cart anytime.');
+            window.location.href = 'cart.php';
         }
 
         // Category Filter Function
