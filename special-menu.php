@@ -1,12 +1,6 @@
 <?php
 session_start();
 
-// Check if user is logged in
-if (!isset($_SESSION['isLoggedIn']) && !isset($_SESSION['isAdmin'])) {
-    header('Location: login.php');
-    exit();
-}
-
 // Initialize cart in session if not exists
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
@@ -42,30 +36,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 // Menu items data
 $menuItems = [
     'frappe' => [
-        ['name' => 'Dirty Matcha Latte', 'price' => 140, 'image' => 'images/dirtymatchalattew.png', 'desc' => 'Matcha with espresso shot, topped with whipped cream'],
-        ['name' => 'Matcha', 'price' => 120, 'image' => 'images/matcha.jpg', 'desc' => 'Pure matcha latte blended with ice'],
-        ['name' => 'Mocha Frappe', 'price' => 185, 'image' => 'images/mocha frappe.jpg', 'desc' => 'A rich blend of coffee, chocolate, and milk blended with ice, topped with whipped cream. Perfect for chocolate and coffee lovers alike.'],
-        ['name' => 'Caramel Frappe', 'price' => 180, 'image' => 'images/caramel frappe.jpg', 'desc' => 'Sweet caramel sauce swirled into a creamy coffee blend, finished with whipped cream and a drizzle of caramel on top.'],
-        ['name' => 'Java Chip Frappe', 'price' => 190, 'image' => 'images/java chip frappe.jpg', 'desc' => 'A chocolatey mix of coffee, milk, and chocolate chips — blended smooth and topped with whipped cream and mocha drizzle.'],
-        ['name' => 'Matcha Green Tea Frappe', 'price' => 195, 'image' => 'images/matcha green tea frappe.jpg', 'desc' => 'A refreshing fusion of earthy matcha green tea and creamy milk, perfectly blended and lightly sweetened.'],
-        ['name' => 'Strawberries & Cream Frappe', 'price' => 185, 'image' => 'images/strawberries and cream frappe.jpg', 'desc' => 'Sweet and creamy strawberry goodness in every sip — a refreshing, non-coffee option for a fruity treat.'],
+        ['name' => 'Mocha Frappe', 'price' => 185, 'image' => 'images/mocha frappe.png', 'desc' => 'A rich blend of coffee, chocolate, and milk blended with ice, topped with whipped cream. Perfect for chocolate and coffee lovers alike.'],
+        ['name' => 'Caramel Frappe', 'price' => 180, 'image' => 'images/caramel frappe.png', 'desc' => 'Sweet caramel sauce swirled into a creamy coffee blend, finished with whipped cream and a drizzle of caramel on top.'],
+        ['name' => 'Java Chip Frappe', 'price' => 190, 'image' => 'images/java chip frappe.png', 'desc' => 'A chocolatey mix of coffee, milk, and chocolate chips — blended smooth and topped with whipped cream and mocha drizzle.'],
+        ['name' => 'Matcha Green Tea Frappe', 'price' => 195, 'image' => 'images/matcha green tea frappe.png', 'desc' => 'A refreshing fusion of earthy matcha green tea and creamy milk, perfectly blended and lightly sweetened.'],
+        ['name' => 'Strawberries & Cream Frappe', 'price' => 185, 'image' => 'images/strawberries and cream frappe.png', 'desc' => 'Sweet and creamy strawberry goodness in every sip — a refreshing, non-coffee option for a fruity treat.'],
     ],
-    'icedcoffee' => [
-        ['name' => 'Iced Americano', 'price' => 100, 'image' => 'images/iced americano.jpg', 'desc' => 'Strong and refreshing espresso over ice'],
-        ['name' => 'Iced Cappucino', 'price' => 110, 'image' => 'images/iced cappucino.png', 'desc' => 'Cold cappucino with foam'],
-        ['name' => 'Iced Bat Brew', 'price' => 150, 'image' => 'images/batbrew.png', 'desc' => 'Our signature blend served over ice'],
-        ['name' => 'Iced Salted Spanish Latte', 'price' => 150, 'image' => 'images/iced salted spanish latte.jpg', 'desc' => 'Creamy Spanish latte with a touch of sea salt'],
-        ['name' => 'Iced Caramel Latte', 'price' => 130, 'image' => 'images/iced caramel latte.jpg', 'desc' => 'Smooth latte with sweet caramel flavor'],
-        ['name' => 'Vanilla Latte', 'price' => 120, 'image' => 'images/vanilla latte.png', 'desc' => 'Classic vanilla-flavored latte'],
-    ],
-    'pastries' => [
+    'pastries' => [ 
         ['name' => 'Banana Bread Slice', 'price' => 85, 'image' => 'images/banana bread.jpg', 'desc' => 'Moist, flavorful, and baked fresh with ripe bananas for that comforting homemade taste. A timeless favorite that pairs perfectly with coffee or tea.'],
         ['name' => 'Buttered Croissant', 'price' => 95, 'image' => 'images/buttered croissantt.jpg', 'desc' => 'Flaky, golden layers of buttery pastry baked to perfection. Simple, elegant, and best enjoyed warm with your favorite brew.'],
-        ['name' => 'Red Velvet mini cake', 'price' => 120, 'image' => 'images/redvelvet.jpg', 'desc' => 'Soft, velvety layers with a hint of cocoa, topped with smooth cream cheese frosting. A sweet, classic indulgence to brighten your day.'],
+        ['name' => 'Red Velvet mini cake', 'price' => 90, 'image' => 'images/redvelvet.png', 'desc' => 'Soft, velvety layers with a hint of cocoa, topped with smooth cream cheese frosting. A sweet, classic indulgence to brighten your day.'],
     ],
     'snacks' => [
-        ['name' => 'Nachos', 'price' => 155, 'image' => 'images/nachos.jpg', 'desc' => 'Crispy tortilla chips layered with melted cheese, savory beef, and tangy salsa. Perfect for sharing or pairing with your favorite iced drink.'],
-        ['name' => 'Truffle Fries', 'price' => 160, 'image' => 'images/trufflefries.jpg', 'desc' => 'Crispy golden fries tossed in aromatic truffle oil and topped with parmesan cheese. A rich and indulgent twist on a classic favorite.'],
+        ['name' => 'Nachos Grande', 'price' => 130, 'image' => 'images/nachos.png', 'desc' => 'Crispy tortilla chips layered with melted cheese, savory beef, and tangy salsa. Perfect for sharing or pairing with your favorite iced drink.'],
+        ['name' => 'Truffle Fries', 'price' => 130, 'image' => 'images/trufflefries.png', 'desc' => 'Crispy golden fries tossed in aromatic truffle oil and topped with parmesan cheese. A rich and indulgent twist on a classic favorite.'],
         ['name' => 'Mini Hotdog Bites', 'price' => 135, 'image' => 'images/minihotdogbites.jpg', 'desc' => 'Bite-sized, juicy hotdogs wrapped in soft pastry rolls. A fun, savory snack that\'s great for quick bites or sharing with friends over coffee.'],
         ['name' => 'Potato Wedges', 'price' => 120, 'image' => 'images/potatowedges.jpg', 'desc' => 'Thick-cut and seasoned to perfection, our potato wedges are crispy on the outside and fluffy inside — a satisfying snack for any time of day.'],
         ['name' => 'Mozzarella Sticks', 'price' => 150, 'image' => 'images/mozarellasticks.jpg', 'desc' => 'Crispy on the outside, soft and gooey on the inside. These golden mozzarella sticks are perfect for sharing and pair deliciously with marinara dip.'],
@@ -81,25 +65,25 @@ $menuItems = [
         ['name' => 'Caesar Salad', 'price' => 165, 'image' => 'images/caesar salad.jpg', 'desc' => 'Crisp romaine lettuce, parmesan, croutons, and Caesar dressing for a timeless favorite.'],
         ['name' => 'Kani Salad', 'price' => 175, 'image' => 'images/kani salad.jpg', 'desc' => 'Japanese-style salad with crab sticks, cucumber, mango, and creamy sesame dressing.'],
     ],
-    'hot-beverages' => [
-        ['name' => 'Hot Espresso', 'price' => 75, 'image' => 'images/espresso.jpg', 'desc' => 'Rich and bold single or double shot of pure espresso. Perfect for espresso enthusiasts.'],
-        ['name' => 'Hot Americano', 'price' => 85, 'image' => 'images/americano.jpg', 'desc' => 'Bold espresso diluted with hot water for a smooth, full-bodied cup.'],
-        ['name' => 'Hot Cappuccino', 'price' => 95, 'image' => 'images/cappuccino.jpg', 'desc' => 'Perfect balance of espresso, steamed milk, and velvety foam topped.'],
-        ['name' => 'Hot Latte', 'price' => 100, 'image' => 'images/latte.jpg', 'desc' => 'Smooth and creamy espresso with steamed milk and a touch of foam.'],
-        ['name' => 'Hot Macchiato', 'price' => 90, 'image' => 'images/macchiato.jpg', 'desc' => 'Espresso "marked" with a dollop of steamed milk foam for a strong, bold taste.'],
-        ['name' => 'Hot Mocha', 'price' => 105, 'image' => 'images/mocha.jpg', 'desc' => 'Rich espresso combined with steamed milk and chocolate, topped with whipped cream.'],
-        ['name' => 'Hot Spanish Latte', 'price' => 105, 'image' => 'images/spanish latte.jpg', 'desc' => 'Creamy latte with a touch of sea salt and caramel for a unique flavor.'],
-        ['name' => 'Hot Matcha Latte', 'price' => 110, 'image' => 'images/matcha.jpg', 'desc' => 'Smooth and creamy matcha green tea latte, lightly sweetened and beautifully frothy.'],
+    'hot-coffee' => [
+        ['name' => 'Hot Espresso', 'price' => 75, 'image' => 'images/hot espresso.png', 'desc' => 'Rich and bold single or double shot of pure espresso. Perfect for espresso enthusiasts.'],
+        ['name' => 'Hot Americano', 'price' => 85, 'image' => 'images/hot americano.png', 'desc' => 'Bold espresso diluted with hot water for a smooth, full-bodied cup.'],
+        ['name' => 'Hot Cappuccino', 'price' => 95, 'image' => 'images/hot capuccino.png', 'desc' => 'Perfect balance of espresso, steamed milk, and velvety foam topped.'],
+        ['name' => 'Hot Latte', 'price' => 100, 'image' => 'images/hot latte.png', 'desc' => 'Smooth and creamy espresso with steamed milk and a touch of foam.'],
+        ['name' => 'Hot Macchiato', 'price' => 90, 'image' => 'images/hot macchiato.png', 'desc' => 'Espresso "marked" with a dollop of steamed milk foam for a strong, bold taste.'],
+        ['name' => 'Hot Mocha', 'price' => 105, 'image' => 'images/hot mocha.png', 'desc' => 'Rich espresso combined with steamed milk and chocolate, topped with whipped cream.'],
+        ['name' => 'Hot Spanish Latte', 'price' => 105, 'image' => 'images/hot spanish latte.png', 'desc' => 'Creamy latte with a touch of sea salt and caramel for a unique flavor.'],
+        ['name' => 'Hot Matcha Latte', 'price' => 110, 'image' => 'images/hot matcha latte.png', 'desc' => 'Smooth and creamy matcha green tea latte, lightly sweetened and beautifully frothy.'],
     ],
-    'iced-beverages' => [
-        ['name' => 'Iced Espresso', 'price' => 80, 'image' => 'images/iced espresso.jpg', 'desc' => 'Bold espresso shots poured over ice for an intense, refreshing kick.'],
-        ['name' => 'Iced Americano', 'price' => 90, 'image' => 'images/iced americano.jpg', 'desc' => 'Strong and refreshing espresso over ice with a smooth finish.'],
-        ['name' => 'Iced Cappuccino', 'price' => 100, 'image' => 'images/iced cappuccino.png', 'desc' => 'Cold cappuccino with ice and foam for a refreshing twist.'],
-        ['name' => 'Iced Latte', 'price' => 105, 'image' => 'images/iced latte.jpg', 'desc' => 'Smooth and creamy iced latte perfect for hot days.'],
-        ['name' => 'Iced Mocha', 'price' => 110, 'image' => 'images/iced mocha.jpg', 'desc' => 'Cold blend of espresso, milk, chocolate, and ice for a delicious treat.'],
-        ['name' => 'Iced Bat Brew', 'price' => 150, 'image' => 'images/batbrew.png', 'desc' => 'Our signature bold dark roast served over ice with smooth, rich notes.'],
-        ['name' => 'Iced Salted Spanish Latte', 'price' => 150, 'image' => 'images/iced salted spanish latte.jpg', 'desc' => 'Creamy iced Spanish latte with a touch of sea salt and caramel.'],
-        ['name' => 'Iced Caramel Latte', 'price' => 130, 'image' => 'images/iced caramel latte.jpg', 'desc' => 'Smooth iced latte with sweet caramel flavor and creamy milk.'],
+    'iced-coffee' => [
+        ['name' => 'Dirty Matcha Latte', 'price' => 150, 'image' => 'images/dirtymatchalattew.png', 'desc' => 'Matcha with espresso shot, topped with whipped cream'],
+        ['name' => 'Matcha', 'price' => 140, 'image' => 'images/matcha.png', 'desc' => 'Pure matcha latte blended with ice'],
+        ['name' => 'Iced Americano', 'price' => 120, 'image' => 'images/iced americano.png', 'desc' => 'Strong and refreshing espresso over ice'],
+        ['name' => 'Iced Cappucino', 'price' => 120, 'image' => 'images/iced cappucino.png', 'desc' => 'Cold cappucino with foam'],
+        ['name' => 'Iced Bat Brew', 'price' => 150, 'image' => 'images/batbrew.png', 'desc' => 'Our signature blend served over ice'],
+        ['name' => 'Iced Salted Spanish Latte', 'price' => 150, 'image' => 'images/iced salted spanish latte.png', 'desc' => 'Creamy Spanish latte with a touch of sea salt'],
+        ['name' => 'Iced Caramel Latte', 'price' => 140, 'image' => 'images/iced caramel latte.png', 'desc' => 'Smooth latte with sweet caramel flavor'],
+        ['name' => 'Vanilla Latte', 'price' => 130, 'image' => 'images/vanilla latte.png', 'desc' => 'Classic vanilla-flavored latte'],
     ],
 ];
 ?>
@@ -497,27 +481,12 @@ $menuItems = [
                                     <span>Total:</span>
                                     <span>₱<?php echo number_format($total, 0); ?></span>
                                 </div>
-                                <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+                                <div class="cart-action-buttons">
+                                    <button class="checkout-btn" onclick="continueBooking()">Continue Booking</button>
+                                    <button class="pickup-later-btn" onclick="pickUpLater()">Pick Up For Later</button>
+                                </div>
                             </div>
                         <?php endif; ?>
-                    </div>
-                </div>
-
-                <!-- Profile Dropdown -->
-                <div class="profile-dropdown">
-                    <button class="profile-btn" onclick="toggleProfile()"><i class="fa-solid fa-user fa-2xl"></i></button>
-                    <div class="dropdown-menu" id="profileMenu">
-                        <div class="dropdown-header">
-                            <strong><?php echo isset($_SESSION['adminUsername']) ? 'Admin' : 'User'; ?></strong>
-                            <p>Welcome back!</p>
-                        </div>
-                        <a href="coffee-landing.php" class="dropdown-item">🏠 Home</a>
-                        <a href="special-menu.php" class="dropdown-item">📋 Menu</a>
-                        <a href="booking.php" class="dropdown-item">📅 Bookings</a>
-                        <?php if (isset($_SESSION['isAdmin'])): ?>
-                            <a href="admin-dashboard.php" class="dropdown-item">⚙️ Dashboard</a>
-                        <?php endif; ?>
-                        <button onclick="logout()" class="dropdown-item logout">🚪 Logout</button>
                     </div>
                 </div>
 
@@ -537,35 +506,37 @@ $menuItems = [
             <!-- Category Filter Buttons -->
             <div class="category-filters">
                 <button class="filter-btn active" onclick="filterCategory('all')">All</button>
-                <button class="filter-btn" onclick="filterCategory('coffee')">Coffee</button>
+                <button class="filter-btn" onclick="filterCategory('hot-coffee')">Hot Coffee</button>
+                <button class="filter-btn" onclick="filterCategory('iced-coffee')">Iced Coffee</button>
+                <button class="filter-btn" onclick="filterCategory('frappe')">Frappe</button>
                 <button class="filter-btn" onclick="filterCategory('pastries')">Pastries</button>
                 <button class="filter-btn" onclick="filterCategory('snacks')">Snacks</button>
                 <button class="filter-btn" onclick="filterCategory('meals')">Meals</button>
-                <button class="filter-btn" onclick="filterCategory('hot-beverages')">Hot Beverages</button>
-                <button class="filter-btn" onclick="filterCategory('iced-beverages')">Iced Beverages</button>
             </div>
 
-            <!-- Frappe Section -->
-            <h3 class="category-title" data-category="coffee iced-beverages">Frappe</h3>
-            <div class="menu-grid" data-category="coffee iced-beverages">
-                <?php foreach ($menuItems['frappe'] as $item): ?>
-                    <a href="#" data-category="coffee" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
+            <!-- Hot Coffee Section -->
+            <h3 class="category-title" data-category="hot-coffee">Hot Coffee</h3>
+            <div class="menu-grid" data-category="hot-coffee">
+                <?php foreach ($menuItems['hot-coffee'] as $item): ?>
+                    <a href="#" data-category="hot-coffee" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
                         <div class="relative overflow-hidden">
-                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-cover transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: cover;">
+                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-contain transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: contain;">
                         </div>
                         <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
                             <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;"><?php echo htmlspecialchars($item['name']); ?></h3>
                             <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;"><?php echo htmlspecialchars($item['desc']); ?></p>
                             <div class="mt-4 flex flex-wrap gap-2" style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                                <button class="price-option px-3 py-1 text-xs font-medium bg-[#FAF3E0] rounded-full hover:bg-[#E2D6C2]" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #FAF3E0; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">M - ₱<?php echo $item['price']; ?></button>
+                                <button type="button" class="size-option px-3 py-1 text-xs font-medium bg-[#FAF3E0] rounded-full hover:bg-[#E2D6C2] transition" data-size="short" data-price="<?php echo $item['price'] - 20; ?>" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #FAF3E0; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">Short - ₱<?php echo $item['price'] - 20; ?></button>
+                                <button type="button" class="size-option px-3 py-1 text-xs font-medium bg-[#C9964C] text-white rounded-full hover:bg-[#B8854B] transition active" data-size="tall" data-price="<?php echo $item['price']; ?>" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #C9964C; color: white; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">Tall - ₱<?php echo $item['price']; ?></button>
+                                <button type="button" class="size-option px-3 py-1 text-xs font-medium bg-[#FAF3E0] rounded-full hover:bg-[#E2D6C2] transition" data-size="grande" data-price="<?php echo $item['price'] + 25; ?>" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #FAF3E0; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">Grande - ₱<?php echo $item['price'] + 25; ?></button>
                             </div>
                             <div class="mt-6 flex items-center gap-2 text-xs font-medium uppercase text-[#A37A58]" style="margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; color: #A37A58;">
                                 <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.9</span>
                                 <span>Premium Blend</span>
                             </div>
                             <form method="POST" style="margin-top: 1.5rem;">
-                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
-                                <input type="hidden" name="product_price" value="<?php echo $item['price']; ?>">
+                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?> (Tall)" class="product-name-input">
+                                <input type="hidden" name="product_price" value="<?php echo $item['price']; ?>" class="product-price-input">
                                 <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($item['image']); ?>">
                                 <button type="submit" name="add_to_cart" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#2B1A12] px-5 py-2 text-sm font-medium text-[#FAF3E0] transition hover:bg-[#1F120B] w-full" style="margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background-color: #2B1A12; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: #FAF3E0; border: none; cursor: pointer; transition: background 0.3s; width: 100%;">
                                     Add to Cart <i class="fa-solid fa-cart-plus"></i>
@@ -577,26 +548,61 @@ $menuItems = [
             </div>
 
             <!-- Iced Coffee Section -->
-            <h3 class="category-title" data-category="coffee iced-beverages">Iced Coffee</h3>
-            <div class="menu-grid" data-category="coffee iced-beverages">
-                <?php foreach ($menuItems['icedcoffee'] as $item): ?>
-                    <a href="#" data-category="coffee" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
+            <h3 class="category-title" data-category="iced-coffee">Iced Coffee</h3>
+            <div class="menu-grid" data-category="iced-coffee">
+                <?php foreach ($menuItems['iced-coffee'] as $item): ?>
+                    <a href="#" data-category="iced-coffee" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
                         <div class="relative overflow-hidden">
-                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-cover transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: cover;">
+                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-contain transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: contain;">
                         </div>
                         <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
                             <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;"><?php echo htmlspecialchars($item['name']); ?></h3>
                             <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;"><?php echo htmlspecialchars($item['desc']); ?></p>
                             <div class="mt-4 flex flex-wrap gap-2" style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                                <button class="price-option px-3 py-1 text-xs font-medium bg-[#FAF3E0] rounded-full hover:bg-[#E2D6C2]" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #FAF3E0; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">M - ₱<?php echo $item['price']; ?></button>
+                                <button type="button" class="size-option px-3 py-1 text-xs font-medium bg-[#FAF3E0] rounded-full hover:bg-[#E2D6C2] transition" data-size="short" data-price="<?php echo $item['price'] - 20; ?>" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #FAF3E0; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">Short - ₱<?php echo $item['price'] - 20; ?></button>
+                                <button type="button" class="size-option px-3 py-1 text-xs font-medium bg-[#C9964C] text-white rounded-full hover:bg-[#B8854B] transition active" data-size="tall" data-price="<?php echo $item['price']; ?>" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #C9964C; color: white; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">Tall - ₱<?php echo $item['price']; ?></button>
+                                <button type="button" class="size-option px-3 py-1 text-xs font-medium bg-[#FAF3E0] rounded-full hover:bg-[#E2D6C2] transition" data-size="grande" data-price="<?php echo $item['price'] + 25; ?>" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #FAF3E0; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">Grande - ₱<?php echo $item['price'] + 25; ?></button>
                             </div>
                             <div class="mt-6 flex items-center gap-2 text-xs font-medium uppercase text-[#A37A58]" style="margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; color: #A37A58;">
                                 <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.9</span>
                                 <span>Rich Aroma</span>
                             </div>
                             <form method="POST" style="margin-top: 1.5rem;">
-                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
-                                <input type="hidden" name="product_price" value="<?php echo $item['price']; ?>">
+                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?> (Tall)" class="product-name-input">
+                                <input type="hidden" name="product_price" value="<?php echo $item['price']; ?>" class="product-price-input">
+                                <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($item['image']); ?>">
+                                <button type="submit" name="add_to_cart" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#2B1A12] px-5 py-2 text-sm font-medium text-[#FAF3E0] transition hover:bg-[#1F120B] w-full" style="margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background-color: #2B1A12; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: #FAF3E0; border: none; cursor: pointer; transition: background 0.3s; width: 100%;">
+                                    Add to Cart <i class="fa-solid fa-cart-plus"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- Frappe Section -->
+            <h3 class="category-title" data-category="frappe">Frappe</h3>
+            <div class="menu-grid" data-category="frappe">
+                <?php foreach ($menuItems['frappe'] as $item): ?>
+                    <a href="#" data-category="frappe" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
+                        <div class="relative overflow-hidden">
+                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-contain transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: contain;">
+                        </div>
+                        <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
+                            <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;"><?php echo htmlspecialchars($item['name']); ?></h3>
+                            <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;"><?php echo htmlspecialchars($item['desc']); ?></p>
+                            <div class="mt-4 flex flex-wrap gap-2" style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                <button type="button" class="size-option px-3 py-1 text-xs font-medium bg-[#FAF3E0] rounded-full hover:bg-[#E2D6C2] transition" data-size="short" data-price="<?php echo $item['price'] - 20; ?>" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #FAF3E0; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">Short - ₱<?php echo $item['price'] - 20; ?></button>
+                                <button type="button" class="size-option px-3 py-1 text-xs font-medium bg-[#C9964C] text-white rounded-full hover:bg-[#B8854B] transition active" data-size="tall" data-price="<?php echo $item['price']; ?>" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #C9964C; color: white; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">Tall - ₱<?php echo $item['price']; ?></button>
+                                <button type="button" class="size-option px-3 py-1 text-xs font-medium bg-[#FAF3E0] rounded-full hover:bg-[#E2D6C2] transition" data-size="grande" data-price="<?php echo $item['price'] + 25; ?>" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #FAF3E0; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">Grande - ₱<?php echo $item['price'] + 25; ?></button>
+                            </div>
+                            <div class="mt-6 flex items-center gap-2 text-xs font-medium uppercase text-[#A37A58]" style="margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; color: #A37A58;">
+                                <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.9</span>
+                                <span>Rich Aroma</span>
+                            </div>
+                            <form method="POST" style="margin-top: 1.5rem;">
+                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?> (Tall)" class="product-name-input">
+                                <input type="hidden" name="product_price" value="<?php echo $item['price']; ?>" class="product-price-input">
                                 <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($item['image']); ?>">
                                 <button type="submit" name="add_to_cart" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#2B1A12] px-5 py-2 text-sm font-medium text-[#FAF3E0] transition hover:bg-[#1F120B] w-full" style="margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background-color: #2B1A12; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: #FAF3E0; border: none; cursor: pointer; transition: background 0.3s; width: 100%;">
                                     Add to Cart <i class="fa-solid fa-cart-plus"></i>
@@ -613,7 +619,7 @@ $menuItems = [
                 <?php foreach ($menuItems['pastries'] as $item): ?>
                     <a href="#" data-category="pastries" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
                         <div class="relative overflow-hidden">
-                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-cover transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: cover;">
+                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-contain transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: contain;">
                         </div>
                         <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
                             <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;"><?php echo htmlspecialchars($item['name']); ?></h3>
@@ -644,7 +650,7 @@ $menuItems = [
                 <?php foreach ($menuItems['snacks'] as $item): ?>
                     <a href="#" data-category="snacks" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
                         <div class="relative overflow-hidden">
-                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-cover transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: cover;">
+                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-contain transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: contain;">
                         </div>
                         <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
                             <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;"><?php echo htmlspecialchars($item['name']); ?></h3>
@@ -675,7 +681,7 @@ $menuItems = [
                 <?php foreach ($menuItems['meals'] as $item): ?>
                     <a href="#" data-category="meals" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
                         <div class="relative overflow-hidden">
-                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-cover transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: cover;">
+                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-contain transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: contain;">
                         </div>
                         <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
                             <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;"><?php echo htmlspecialchars($item['name']); ?></h3>
@@ -686,68 +692,6 @@ $menuItems = [
                             <div class="mt-6 flex items-center gap-2 text-xs font-medium uppercase text-[#A37A58]" style="margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; color: #A37A58;">
                                 <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.9</span>
                                 <span>Hearty Meal</span>
-                            </div>
-                            <form method="POST" style="margin-top: 1.5rem;">
-                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
-                                <input type="hidden" name="product_price" value="<?php echo $item['price']; ?>">
-                                <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($item['image']); ?>">
-                                <button type="submit" name="add_to_cart" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#2B1A12] px-5 py-2 text-sm font-medium text-[#FAF3E0] transition hover:bg-[#1F120B] w-full" style="margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background-color: #2B1A12; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: #FAF3E0; border: none; cursor: pointer; transition: background 0.3s; width: 100%;">
-                                    Add to Cart <i class="fa-solid fa-cart-plus"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-
-            <!-- Hot Beverages Section -->
-            <h3 class="category-title" data-category="hot-beverages">Hot Beverages</h3>
-            <div class="menu-grid" data-category="hot-beverages">
-                <?php foreach ($menuItems['hot-beverages'] as $item): ?>
-                    <a href="#" data-category="hot-beverages" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
-                        <div class="relative overflow-hidden">
-                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-cover transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: cover;">
-                        </div>
-                        <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
-                            <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;"><?php echo htmlspecialchars($item['name']); ?></h3>
-                            <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;"><?php echo htmlspecialchars($item['desc']); ?></p>
-                            <div class="mt-4 flex flex-wrap gap-2" style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                                <button class="price-option px-3 py-1 text-xs font-medium bg-[#FAF3E0] rounded-full hover:bg-[#E2D6C2]" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #FAF3E0; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">₱<?php echo $item['price']; ?></button>
-                            </div>
-                            <div class="mt-6 flex items-center gap-2 text-xs font-medium uppercase text-[#A37A58]" style="margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; color: #A37A58;">
-                                <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.9</span>
-                                <span>Warm Comfort</span>
-                            </div>
-                            <form method="POST" style="margin-top: 1.5rem;">
-                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
-                                <input type="hidden" name="product_price" value="<?php echo $item['price']; ?>">
-                                <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($item['image']); ?>">
-                                <button type="submit" name="add_to_cart" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#2B1A12] px-5 py-2 text-sm font-medium text-[#FAF3E0] transition hover:bg-[#1F120B] w-full" style="margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background-color: #2B1A12; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: #FAF3E0; border: none; cursor: pointer; transition: background 0.3s; width: 100%;">
-                                    Add to Cart <i class="fa-solid fa-cart-plus"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-
-            <!-- Iced Beverages Section -->
-            <h3 class="category-title" data-category="iced-beverages">Iced Beverages</h3>
-            <div class="menu-grid" data-category="iced-beverages">
-                <?php foreach ($menuItems['iced-beverages'] as $item): ?>
-                    <a href="#" data-category="iced-beverages" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
-                        <div class="relative overflow-hidden">
-                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="aspect-4/5 w-full mt-9 object-cover transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: cover;">
-                        </div>
-                        <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
-                            <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;"><?php echo htmlspecialchars($item['name']); ?></h3>
-                            <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;"><?php echo htmlspecialchars($item['desc']); ?></p>
-                            <div class="mt-4 flex flex-wrap gap-2" style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                                <button class="price-option px-3 py-1 text-xs font-medium bg-[#FAF3E0] rounded-full hover:bg-[#E2D6C2]" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 500; background-color: #FAF3E0; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.3s;">₱<?php echo $item['price']; ?></button>
-                            </div>
-                            <div class="mt-6 flex items-center gap-2 text-xs font-medium uppercase text-[#A37A58]" style="margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; color: #A37A58;">
-                                <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.9</span>
-                                <span>Cool Refreshment</span>
                             </div>
                             <form method="POST" style="margin-top: 1.5rem;">
                                 <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
@@ -848,41 +792,259 @@ $menuItems = [
         </div>
     </footer>
 
-    <script>
-        function toggleProfile() {
-            const menu = document.getElementById('profileMenu');
-            const cartMenu = document.getElementById('cartMenu');
-            menu.classList.toggle('active');
-            cartMenu.classList.remove('active');
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-modal-content">
+            <button class="login-modal-close" onclick="closeLoginModal()">&times;</button>
+            <div class="login-modal-header">
+                <img src="images/logoo.png" alt="Logo" class="login-modal-logo">
+                <h2>Welcome Back!</h2>
+                <p>Please select how you want to continue</p>
+            </div>
+            <div class="login-modal-body">
+                <div class="login-option-card" onclick="continueToBooking()">
+                    <div class="login-option-icon">📅</div>
+                    <div class="login-option-content">
+                        <h3>Continue to Booking</h3>
+                        <p>Proceed with your reservation and order</p>
+                    </div>
+                    <div class="login-option-arrow">→</div>
+                </div>
+                <div class="login-option-card" onclick="addForLater()">
+                    <div class="login-option-icon">🛒</div>
+                    <div class="login-option-content">
+                        <h3>Add for Later</h3>
+                        <p>Save items to cart and continue browsing</p>
+                    </div>
+                    <div class="login-option-arrow">→</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .login-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s;
         }
 
+        .login-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-modal-content {
+            background: white;
+            border-radius: 25px;
+            max-width: 500px;
+            width: 90%;
+            padding: 40px;
+            position: relative;
+            animation: slideUp 0.3s;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 35px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #2B1A12;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .login-modal-close:hover {
+            color: #C9964C;
+        }
+
+        .login-modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-modal-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+        .login-modal-header h2 {
+            font-size: 28px;
+            color: #2B1A12;
+            margin-bottom: 10px;
+        }
+
+        .login-modal-header p {
+            color: #6F4E37;
+            font-size: 14px;
+        }
+
+        .login-modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .login-option-card {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border: 2px solid #E5E7EB;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            gap: 15px;
+        }
+
+        .login-option-card:hover {
+            border-color: #C9964C;
+            background: #FFF7ED;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(201, 150, 76, 0.2);
+        }
+
+        .login-option-icon {
+            font-size: 40px;
+            flex-shrink: 0;
+        }
+
+        .login-option-content {
+            flex: 1;
+        }
+
+        .login-option-content h3 {
+            font-size: 18px;
+            color: #2B1A12;
+            margin: 0 0 5px 0;
+        }
+
+        .login-option-content p {
+            font-size: 13px;
+            color: #6F4E37;
+            margin: 0;
+        }
+
+        .login-option-arrow {
+            font-size: 24px;
+            color: #C9964C;
+            flex-shrink: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        body.dark-mode .login-modal-content {
+            background: #2B1A12;
+        }
+
+        body.dark-mode .login-modal-header h2,
+        body.dark-mode .login-option-content h3 {
+            color: #FAF3E0;
+        }
+
+        body.dark-mode .login-modal-header p,
+        body.dark-mode .login-option-content p {
+            color: #D4B896;
+        }
+
+        body.dark-mode .login-option-card {
+            border-color: #4A3728;
+            background: #1F120B;
+        }
+
+        body.dark-mode .login-option-card:hover {
+            border-color: #C9964C;
+            background: #3A2818;
+        }
+
+        body.dark-mode .login-modal-close {
+            color: #FAF3E0;
+        }
+
+        body.dark-mode .login-modal-close:hover {
+            color: #C9964C;
+        }
+    </style>
+
+    <script>
         function toggleCart() {
             const menu = document.getElementById('cartMenu');
-            const profileMenu = document.getElementById('profileMenu');
-            menu.classList.toggle('active');
-            profileMenu.classList.remove('active');
+            const cartItems = <?php echo count($_SESSION['cart']); ?>;
+            
+            // Show login modal if cart has items
+            if (cartItems > 0) {
+                showLoginModal();
+            } else {
+                menu.classList.toggle('active');
+            }
         }
 
-        document.addEventListener('click', function(event) {
-            const profileDropdown = document.querySelector('.profile-dropdown');
-            const cartDropdown = document.querySelector('.cart-dropdown');
-            const profileMenu = document.getElementById('profileMenu');
-            const cartMenu = document.getElementById('cartMenu');
+        // Show Login Modal
+        function showLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-            if (!profileDropdown.contains(event.target)) {
-                profileMenu.classList.remove('active');
+        // Close Login Modal
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Continue to Booking
+        function continueToBooking() {
+            window.location.href = 'booking.php';
+        }
+
+        // Add for Later (close modal and show cart)
+        function addForLater() {
+            closeLoginModal();
+            const menu = document.getElementById('cartMenu');
+            menu.classList.add('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('loginModal')?.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeLoginModal();
             }
+        });
+
+        document.addEventListener('click', function(event) {
+            const cartDropdown = document.querySelector('.cart-dropdown');
+            const cartMenu = document.getElementById('cartMenu');
 
             if (!cartDropdown.contains(event.target)) {
                 cartMenu.classList.remove('active');
             }
         });
-
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                window.location.href = 'login.php?logout=1';
-            }
-        }
 
         function updateQuantity(index, change) {
             fetch('update-cart.php', {
@@ -897,8 +1059,16 @@ $menuItems = [
                 });
         }
 
-        function checkout() {
-            alert('Checkout functionality will be implemented soon!');
+        // Continue Booking - redirect to booking page
+        function continueBooking() {
+            window.location.href = 'booking.php';
+        }
+
+        // Pick Up For Later - close cart and continue browsing
+        function pickUpLater() {
+            const cartMenu = document.getElementById('cartMenu');
+            cartMenu.classList.remove('active');
+            alert('Your items are saved! Continue browsing and come back to your cart anytime.');
         }
 
         // Category Filter Function
@@ -924,6 +1094,48 @@ $menuItems = [
                 }
             });
         }
+
+        // Size Selection Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sizeOptions = document.querySelectorAll('.size-option');
+            
+            sizeOptions.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get the parent card container
+                    const card = this.closest('.group');
+                    const siblingButtons = card.querySelectorAll('.size-option');
+                    
+                    // Remove active state from all size buttons in this card
+                    siblingButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.style.backgroundColor = '#FAF3E0';
+                        btn.style.color = '';
+                    });
+                    
+                    // Add active state to clicked button
+                    this.classList.add('active');
+                    this.style.backgroundColor = '#C9964C';
+                    this.style.color = 'white';
+                    
+                    // Update hidden form inputs
+                    const form = card.querySelector('form');
+                    const nameInput = form.querySelector('.product-name-input');
+                    const priceInput = form.querySelector('.product-price-input');
+                    
+                    const size = this.getAttribute('data-size');
+                    const price = this.getAttribute('data-price');
+                    const baseName = nameInput.value.replace(/ \(Short\)| \(Tall\)| \(Grande\)/g, '');
+                    
+                    // Capitalize first letter of size
+                    const sizeFormatted = size.charAt(0).toUpperCase() + size.slice(1);
+                    
+                    nameInput.value = baseName + ' (' + sizeFormatted + ')';
+                    priceInput.value = price;
+                });
+            });
+        });
     </script>
 </body>
 

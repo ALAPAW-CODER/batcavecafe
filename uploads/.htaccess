@@ -1,0 +1,2 @@
+# Protect payment proof images from direct access
+Options -Indexes

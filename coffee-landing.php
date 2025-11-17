@@ -1,12 +1,6 @@
 <?php
 session_start();
 
-// Check if user is logged in
-if (!isset($_SESSION['isLoggedIn']) && !isset($_SESSION['isAdmin'])) {
-    header('Location: login.php');
-    exit();
-}
-
 // Initialize cart in session if not exists
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
@@ -206,10 +200,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: white;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            min-width: 350px;
-            max-width: 400px;
+            min-width: 550px;
+            max-width: 650px;
             z-index: 1000;
-            max-height: 500px;
+            max-height: 800px;
             overflow-y: auto;
         }
 
@@ -351,7 +345,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
             .cart-menu {
                 min-width: 280px;
                 max-width: 90vw;
@@ -380,6 +374,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <!-- Page Opening Animation Overlay -->
+    <div id="introOverlay" class="intro-overlay">
+        <img id="introBeanRoll" src="images/roll coffee bean.png" alt="Rolling Coffee Bean" class="intro-bean">
+        <img id="introLogo" src="images/logoo.png" alt="Logo" class="intro-logo">
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div id="mainContent" class="main-content">
     <!-- Header Section -->
     <header>
         <nav class="navbar">
@@ -442,27 +444,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <span>Total:</span>
                                     <span>₱<?php echo number_format($total, 0); ?></span>
                                 </div>
-                                <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+                                <div class="cart-action-buttons">
+                                    <button class="checkout-btn" onclick="continueBooking()">Continue Booking</button>
+                                    <button class="pickup-later-btn" onclick="pickUpLater()">Pick Up For Later</button>
+                                </div>
                             </div>
                         <?php endif; ?>
-                    </div>
-                </div>
-
-                <!-- Profile Dropdown -->
-                <div class="profile-dropdown">
-                    <button class="profile-btn" onclick="toggleProfile()"><i class="fa-solid fa-user fa-2xl"></i></button>
-                    <div class="dropdown-menu" id="profileMenu">
-                        <div class="dropdown-header">
-                            <strong><?php echo isset($_SESSION['adminUsername']) ? 'Admin' : 'User'; ?></strong>
-                            <p>Welcome back!</p>
-                        </div>
-                        <a href="coffee-landing.php" class="dropdown-item">🏠 Home</a>
-                        <a href="special-menu.php" class="dropdown-item">📋 Menu</a>
-                        <a href="booking.php" class="dropdown-item">📅 Bookings</a>
-                        <?php if (isset($_SESSION['isAdmin'])): ?>
-                            <a href="admin-dashboard.php" class="dropdown-item">⚙️ Dashboard</a>
-                        <?php endif; ?>
-                        <button onclick="logout()" class="dropdown-item logout">🚪 Logout</button>
                     </div>
                 </div>
 
@@ -490,8 +477,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h1>The Malvar Bat <span class="highlight">Cave Cafe</span></h1>
                 <p>The premier late-night study, social, and coffee spot near the Batangas State University Malvar Campus. Your perfect place for studying, socializing, and enjoying premium coffee.</p>
                 <div class="hero-buttons">
-                    <button class="btn-primary" onclick="window.location.href='booking.php'">Book Now 📅</button>
-                    <a href="#bestseller" class="btn-bestseller">Explore Best Sellers ⬇️</a>
+                    <button class="btn-primary" onclick="window.location.href='booking.php'">
+                        <img src="images/booking.png" alt="Book" class="btn-icon"> Book Now
+                    </button>
+                    <a href="#bestseller" class="btn-bestseller">
+                        <img src="images/coffee beans.png" alt="Coffee" class="btn-icon"> Best Sellers
+                    </a>
                 </div>
             </div>
 
@@ -508,7 +499,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Popular Now Section -->
     <section class="popular" id="bestseller">
-        <h2>Popular Now</h2>
+        <div class="popular-header">
+            <img src="images/themalvar.png" alt="Coffee" class="popular-coffee-img">
+            <div class="popular-text-box">
+                <h2>Our trending sips and bites that keep customers coming back for more.</h2>
+            </div>
+        </div>
         <div class="coffee-beans-bottom">
             <span class="bean">☕</span>
             <span class="bean">☕</span>
@@ -517,73 +513,149 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="products-grid">
             <!-- Product 1 -->
-            <a href="#" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
-                <div class="relative overflow-hidden">
-                    <img src="images/iced salted spanish latte.jpg" alt="Iced Salted Spanish Latte" class="aspect-4/5 w-full mt-9 object-cover transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: cover;">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="images/batbrew.png" alt="Iced Bat Brew">
                 </div>
                 <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
-                    <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;">Iced Salted Spanish Latte</h3>
-                    <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;">Rich espresso with smooth cold milk and a hint of salt</p>
+                    <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;">Iced Bat Brew</h3>
+                    <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;">Mystical dark roast with a smooth, bold flavor</p>
                     <div class="mt-6 flex items-center gap-2 text-xs font-medium uppercase text-[#A37A58]" style="margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; color: #A37A58;">
-                        <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.8</span>
-                        <span>Iced Refreshment</span>
+                        <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.9</span>
+                        <span>Signature Brew</span>
                     </div>
                     <form method="POST" style="margin-top: 1.5rem;">
-                        <input type="hidden" name="product_name" value="Iced Salted Spanish Latte">
-                        <input type="hidden" name="product_price" value="150">
-                        <input type="hidden" name="product_image" value="images/iced salted spanish latte.jpg">
+                        <input type="hidden" name="product_name" value="Iced Bat Brew">
+                        <input type="hidden" name="product_price" value="145">
+                        <input type="hidden" name="product_image" value="images/batbrew.png">
                         <button type="submit" name="add_to_cart" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#2B1A12] px-5 py-2 text-sm font-medium text-[#FAF3E0] transition hover:bg-[#1F120B] w-full" style="margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background-color: #2B1A12; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: #FAF3E0; border: none; cursor: pointer; transition: background 0.3s; width: 100%;">
                             Add to Cart <i class="fa-solid fa-cart-plus"></i>
                         </button>
                     </form>
                 </div>
-            </a>
+            </div>
 
             <!-- Product 2 -->
-            <a href="#" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
-                <div class="relative overflow-hidden">
-                    <img src="images/vanilla latte.png" alt="Vanilla Latte" class="aspect-4/5 w-full mt-9 object-cover transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: cover;">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="images/redvelvet.png" alt="Red Velvet Muffin">
                 </div>
                 <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
-                    <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;">Vanilla Latte</h3>
-                    <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;">Smooth latte with delicate vanilla flavor and creamy texture</p>
+                    <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;">Red Velvet Muffin</h3>
+                    <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;">Decadent red velvet muffin with cream cheese frosting</p>
                     <div class="mt-6 flex items-center gap-2 text-xs font-medium uppercase text-[#A37A58]" style="margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; color: #A37A58;">
-                        <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.8</span>
-                        <span>Classic Favorite</span>
+                        <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.7</span>
+                        <span>Sweet Treat</span>
                     </div>
                     <form method="POST" style="margin-top: 1.5rem;">
-                        <input type="hidden" name="product_name" value="Vanilla Latte">
-                        <input type="hidden" name="product_price" value="120">
-                        <input type="hidden" name="product_image" value="images/vanilla latte.jpg">
+                        <input type="hidden" name="product_name" value="Red Velvet Muffin">
+                        <input type="hidden" name="product_price" value="95">
+                        <input type="hidden" name="product_image" value="images/redvelvet.png">
                         <button type="submit" name="add_to_cart" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#2B1A12] px-5 py-2 text-sm font-medium text-[#FAF3E0] transition hover:bg-[#1F120B] w-full" style="margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background-color: #2B1A12; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: #FAF3E0; border: none; cursor: pointer; transition: background 0.3s; width: 100%;">
                             Add to Cart <i class="fa-solid fa-cart-plus"></i>
                         </button>
                     </form>
                 </div>
-            </a>
+            </div>
 
             <!-- Product 3 -->
-            <a href="#" class="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/90 shadow ring-1 ring-[#D7A86E]/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:ring-[#C9964C]/30" style="text-decoration: none; color: inherit;">
-                <div class="relative overflow-hidden">
-                    <img src="images/iced caramel latte.jpg" alt="Iced Caramel Latte" class="aspect-4/5 w-full mt-9 object-cover transition duration-500 group-hover:scale-105" style="height: 350px; object-fit: cover;">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="images/nachos.png" alt="Nachos">
                 </div>
                 <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
-                    <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;">Iced Caramel Latte</h3>
-                    <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;">Cool and sweet caramel latte perfect for hot days</p>
+                    <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;">Nachos</h3>
+                    <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;">Crispy tortilla chips topped with cheese and salsa</p>
                     <div class="mt-6 flex items-center gap-2 text-xs font-medium uppercase text-[#A37A58]" style="margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; color: #A37A58;">
-                        <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.8</span>
-                        <span>Sweet Caramel</span>
+                        <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.6</span>
+                        <span>Savory Snack</span>
                     </div>
                     <form method="POST" style="margin-top: 1.5rem;">
-                        <input type="hidden" name="product_name" value="Iced Caramel Latte">
-                        <input type="hidden" name="product_price" value="130">
-                        <input type="hidden" name="product_image" value="images/iced caramel latte.jpg">
+                        <input type="hidden" name="product_name" value="Nachos">
+                        <input type="hidden" name="product_price" value="110">
+                        <input type="hidden" name="product_image" value="images/nachos.png">
                         <button type="submit" name="add_to_cart" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#2B1A12] px-5 py-2 text-sm font-medium text-[#FAF3E0] transition hover:bg-[#1F120B] w-full" style="margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background-color: #2B1A12; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: #FAF3E0; border: none; cursor: pointer; transition: background 0.3s; width: 100%;">
                             Add to Cart <i class="fa-solid fa-cart-plus"></i>
                         </button>
                     </form>
                 </div>
-            </a>
+            </div>
+
+            <!-- Product 4: Hot Cappuccino -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="images/hot capuccino.png" alt="Hot Cappuccino">
+                </div>
+                <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
+                    <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;">Hot Cappuccino</h3>
+                    <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;">Rich espresso with velvety steamed milk foam</p>
+                    <div class="mt-6 flex items-center gap-2 text-xs font-medium uppercase text-[#A37A58]" style="margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; color: #A37A58;">
+                        <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.8</span>
+                        <span>Hot Coffee</span>
+                    </div>
+                    <form method="POST" style="margin-top: 1.5rem;">
+                        <input type="hidden" name="product_name" value="Hot Cappuccino">
+                        <input type="hidden" name="product_price" value="120">
+                        <input type="hidden" name="product_image" value="images/hot capuccino.png">
+                        <button type="submit" name="add_to_cart" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#2B1A12] px-5 py-2 text-sm font-medium text-[#FAF3E0] transition hover:bg-[#1F120B] w-full" style="margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background-color: #2B1A12; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: #FAF3E0; border: none; cursor: pointer; transition: background 0.3s; width: 100%;">
+                            Add to Cart <i class="fa-solid fa-cart-plus"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Product 5: Matcha Green Tea Frappe -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="images/matcha green tea frappe.png" alt="Matcha Green Tea Frappe">
+                </div>
+                <div class="flex flex-1 flex-col p-6" style="display: flex; flex-direction: column; flex: 1; padding: 1.5rem;">
+                    <h3 class="text-lg font-semibold text-[#2B1A12]" style="font-size: 1.125rem; font-weight: 600; color: #2B1A12;">Matcha Green Tea Frappe</h3>
+                    <p class="mt-1 text-sm text-[#6F4E37]" style="margin-top: 0.25rem; font-size: 0.875rem; color: #6F4E37; line-height: 1.5;">Refreshing blended matcha with ice and cream</p>
+                    <div class="mt-6 flex items-center gap-2 text-xs font-medium uppercase text-[#A37A58]" style="margin-top: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; color: #A37A58;">
+                        <span class="flex items-center gap-1 text-[#C9964C]" style="display: flex; align-items: center; gap: 0.25rem; color: #C9964C;">★ 4.7</span>
+                        <span>Iced Frappe</span>
+                    </div>
+                    <form method="POST" style="margin-top: 1.5rem;">
+                        <input type="hidden" name="product_name" value="Matcha Green Tea Frappe">
+                        <input type="hidden" name="product_price" value="135">
+                        <input type="hidden" name="product_image" value="images/matcha green tea frappe.png">
+                        <button type="submit" name="add_to_cart" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#2B1A12] px-5 py-2 text-sm font-medium text-[#FAF3E0] transition hover:bg-[#1F120B] w-full" style="margin-top: 1.5rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background-color: #2B1A12; padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500; color: #FAF3E0; border: none; cursor: pointer; transition: background 0.3s; width: 100%;">
+                            Add to Cart <i class="fa-solid fa-cart-plus"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="mission-vision-section">
+        <div class="mission-vision-container">
+            <!-- Two Column Layout -->
+            <div class="mission-vision-grid">
+                <!-- Mission Column -->
+                <div class="mission-column">
+                    <h2 class="section-title">MISSION STATEMENT</h2>
+                    <div class="statement-box">
+                        <p>The Malvar Bat Cave Cafe is dedicated to providing a consistently comfortable, secure, and inspiring environment where students can focus and socialize. We commit to serving high-quality coffee and nourishment, and offering a seamless, professional experience through functional services like our dedicated reservation system, ensuring every visit lights up the path to their next achievement.</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="images/inside the cafe 1.png" alt="The Malvar Bat Cave Cafe Interior" class="statement-img">
+                    </div>
+                </div>
+
+                <!-- Vision Column -->
+                <div class="vision-column">
+                    <h2 class="section-title">VISION STATEMENT</h2>
+                    <div class="statement-box">
+                        <p>To be the undisputed sanctuary and second home for the BSU community, recognized as the best late-night establishment that fuels academic success, fosters genuine connection, and elevates the local coffee culture in Malvar.</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="images/inside the cafe 2.png" alt="Inside The Malvar Bat Cave Cafe" class="statement-img">
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -620,7 +692,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <li><a href="#about">About Us</a></li>
                         <li><a href="#careers">Careers</a></li>
                         <li><a href="#contact">Contact</a></li>
-                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="privacy-policy.php">Privacy Policy</a></li>
                     </ul>
                 </div>
 
@@ -630,8 +702,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="footer-contact">📍 Malvar, Batangas State University Area</p>
                     <p class="footer-contact">📞 09636996688</p>
                     <p class="footer-contact">📧 info@malvarbatcavecafe.com</p>
-                    <p class="footer-contact">⏰ Mon-Fri: 8:00 AM - 9:00 PM</p>
-                    <p class="footer-contact">⏰ Sat-Sun: 9:00 AM - 10:00 PM</p>
+                    <p class="footer-contact">⏰ Mon - Sun: 1:00 PM - 1:00 AM</p>
                 </div>
             </div>
 
@@ -671,45 +742,261 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </footer>
 
-    <script>
-        // Toggle Profile Dropdown
-        function toggleProfile() {
-            const menu = document.getElementById('profileMenu');
-            const cartMenu = document.getElementById('cartMenu');
-            menu.classList.toggle('active');
-            cartMenu.classList.remove('active');
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-modal-content">
+            <button class="login-modal-close" onclick="closeLoginModal()">&times;</button>
+            <div class="login-modal-header">
+                <img src="images/logoo.png" alt="Logo" class="login-modal-logo">
+                <h2>Welcome Back!</h2>
+                <p>Please select how you want to continue</p>
+            </div>
+            <div class="login-modal-body">
+                <div class="login-option-card" onclick="continueToBooking()">
+                    <div class="login-option-icon">📅</div>
+                    <div class="login-option-content">
+                        <h3>Continue to Booking</h3>
+                        <p>Proceed with your reservation and order</p>
+                    </div>
+                    <div class="login-option-arrow">→</div>
+                </div>
+                <div class="login-option-card" onclick="addForLater()">
+                    <div class="login-option-icon">🛒</div>
+                    <div class="login-option-content">
+                        <h3>Add for Later</h3>
+                        <p>Save items to cart and continue browsing</p>
+                    </div>
+                    <div class="login-option-arrow">→</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .login-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s;
         }
 
+        .login-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-modal-content {
+            background: white;
+            border-radius: 25px;
+            max-width: 500px;
+            width: 90%;
+            padding: 40px;
+            position: relative;
+            animation: slideUp 0.3s;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 35px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #2B1A12;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .login-modal-close:hover {
+            color: #C9964C;
+        }
+
+        .login-modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-modal-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+        .login-modal-header h2 {
+            font-size: 28px;
+            color: #2B1A12;
+            margin-bottom: 10px;
+        }
+
+        .login-modal-header p {
+            color: #6F4E37;
+            font-size: 14px;
+        }
+
+        .login-modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .login-option-card {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border: 2px solid #E5E7EB;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            gap: 15px;
+        }
+
+        .login-option-card:hover {
+            border-color: #C9964C;
+            background: #FFF7ED;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(201, 150, 76, 0.2);
+        }
+
+        .login-option-icon {
+            font-size: 40px;
+            flex-shrink: 0;
+        }
+
+        .login-option-content {
+            flex: 1;
+        }
+
+        .login-option-content h3 {
+            font-size: 18px;
+            color: #2B1A12;
+            margin: 0 0 5px 0;
+        }
+
+        .login-option-content p {
+            font-size: 13px;
+            color: #6F4E37;
+            margin: 0;
+        }
+
+        .login-option-arrow {
+            font-size: 24px;
+            color: #C9964C;
+            flex-shrink: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        body.dark-mode .login-modal-content {
+            background: #2B1A12;
+        }
+
+        body.dark-mode .login-modal-header h2,
+        body.dark-mode .login-option-content h3 {
+            color: #FAF3E0;
+        }
+
+        body.dark-mode .login-modal-header p,
+        body.dark-mode .login-option-content p {
+            color: #D4B896;
+        }
+
+        body.dark-mode .login-option-card {
+            border-color: #4A3728;
+            background: #1F120B;
+        }
+
+        body.dark-mode .login-option-card:hover {
+            border-color: #C9964C;
+            background: #3A2818;
+        }
+
+        body.dark-mode .login-modal-close {
+            color: #FAF3E0;
+        }
+
+        body.dark-mode .login-modal-close:hover {
+            color: #C9964C;
+        }
+    </style>
+
+    <script>
         // Toggle Cart Dropdown
         function toggleCart() {
             const menu = document.getElementById('cartMenu');
-            const profileMenu = document.getElementById('profileMenu');
-            menu.classList.toggle('active');
-            profileMenu.classList.remove('active');
+            const cartItems = <?php echo count($_SESSION['cart']); ?>;
+            
+            // Show login modal if cart has items
+            if (cartItems > 0) {
+                showLoginModal();
+            } else {
+                menu.classList.toggle('active');
+            }
         }
+
+        // Show Login Modal
+        function showLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Login Modal
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Continue to Booking
+        function continueToBooking() {
+            window.location.href = 'booking.php';
+        }
+
+        // Add for Later (close modal and show cart)
+        function addForLater() {
+            closeLoginModal();
+            const menu = document.getElementById('cartMenu');
+            menu.classList.add('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('loginModal')?.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeLoginModal();
+            }
+        });
 
         // Close dropdowns when clicking outside
         document.addEventListener('click', function(event) {
-            const profileDropdown = document.querySelector('.profile-dropdown');
             const cartDropdown = document.querySelector('.cart-dropdown');
-            const profileMenu = document.getElementById('profileMenu');
             const cartMenu = document.getElementById('cartMenu');
-
-            if (!profileDropdown.contains(event.target)) {
-                profileMenu.classList.remove('active');
-            }
 
             if (!cartDropdown.contains(event.target)) {
                 cartMenu.classList.remove('active');
             }
         });
-
-        // Logout function
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                window.location.href = 'login.php?logout=1';
-            }
-        }
 
         // Update cart quantity
         function updateQuantity(index, change) {
@@ -725,12 +1012,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 });
         }
 
-        // Checkout
-        function checkout() {
-            alert('Checkout functionality will be implemented soon!');
-            // window.location.href = 'checkout.php';
+        // Continue Booking - redirect to booking page
+        function continueBooking() {
+            window.location.href = 'booking.php';
+        }
+
+        // Pick Up For Later - close cart and continue browsing
+        function pickUpLater() {
+            const cartMenu = document.getElementById('cartMenu');
+            cartMenu.classList.remove('active');
+            alert('Your items are saved! Continue browsing and come back to your cart anytime.');
         }
     </script>
+
+    <!-- Page Opening Animation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const introOverlay = document.getElementById('introOverlay');
+            const introBeanRoll = document.getElementById('introBeanRoll');
+            const introLogo = document.getElementById('introLogo');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Fallback: Force show content after 4 seconds no matter what
+            setTimeout(function() {
+                if (introOverlay && introOverlay.style.display !== 'none') {
+                    introOverlay.style.display = 'none';
+                    mainContent.style.opacity = '1';
+                    triggerEntranceAnimations();
+                }
+            }, 4000);
+            
+            // Hide main content initially
+            mainContent.style.opacity = '0';
+            
+            // Stage 1: Bean rolls from top to center (1s)
+            if (introBeanRoll) introBeanRoll.classList.add('bean-stage-1');
+            
+            // Stage 2: Bean spins while scaling (1s) - starts at 1s
+            setTimeout(function() {
+                if (introBeanRoll) {
+                    introBeanRoll.classList.remove('bean-stage-1');
+                    introBeanRoll.classList.add('bean-stage-2');
+                }
+            }, 1000);
+            
+            // Stage 3: Show logo (1s) - starts at 2s
+            setTimeout(function() {
+                if (introBeanRoll) introBeanRoll.style.display = 'none';
+                if (introLogo) introLogo.classList.add('logo-appear');
+            }, 2000);
+            
+            // Stage 4: Fade out and show content - starts at 3s
+            setTimeout(function() {
+                if (introOverlay) {
+                    introOverlay.style.transition = 'opacity 0.6s ease';
+                    introOverlay.style.opacity = '0';
+                    
+                    setTimeout(function() {
+                        introOverlay.style.display = 'none';
+                        mainContent.style.opacity = '1';
+                        triggerEntranceAnimations();
+                    }, 600);
+                }
+            }, 3000);
+            
+            function triggerEntranceAnimations() {
+                const heroImage = document.querySelector('.hero-image');
+                const heroText = document.querySelector('.hero-text');
+                const popularSection = document.querySelector('.popular');
+                
+                if (heroImage) heroImage.classList.add('animate-slide-down');
+                if (heroText) heroText.classList.add('animate-fade-in');
+                if (popularSection) popularSection.classList.add('animate-fade-in-up');
+            }
+        });
+    </script>
+    </div><!-- Close main-content wrapper -->
 </body>
 
 </html>
