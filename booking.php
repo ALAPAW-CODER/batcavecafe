@@ -8,6 +8,7 @@ if (!isset($_SESSION['cart'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,24 +72,32 @@ if (!isset($_SESSION['cart'])) {
         }
 
         @keyframes zoomInOut {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.08);
             }
         }
 
         @keyframes wiggle {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: rotate(0deg) translateY(0px);
             }
+
             25% {
                 transform: rotate(-3deg) translateY(-5px);
             }
+
             50% {
                 transform: rotate(0deg) translateY(0px);
             }
+
             75% {
                 transform: rotate(3deg) translateY(-5px);
             }
@@ -154,9 +163,12 @@ if (!isset($_SESSION['cart'])) {
         }
 
         @keyframes float {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0px);
             }
+
             50% {
                 transform: translateY(-10px);
             }
@@ -662,6 +674,7 @@ if (!isset($_SESSION['cart'])) {
         }
     </style>
 </head>
+
 <body>
     <!-- Header (copy from existing page) -->
     <header>
@@ -679,7 +692,7 @@ if (!isset($_SESSION['cart'])) {
                 <!-- Cart Dropdown -->
                 <div class="cart-dropdown">
                     <button class="cart-btn" onclick="toggleCart()">
-                        <i class="fa-solid fa-cart-shopping fa-xl"></i>
+                        <i class="fa-solid fa-cart-shopping fa-2xl"></i>
                         <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
                             <span class="cart-count"><?php echo count($_SESSION['cart']); ?></span>
                         <?php endif; ?>
@@ -728,12 +741,6 @@ if (!isset($_SESSION['cart'])) {
                         <?php endif; ?>
                     </div>
                 </div>
-                
-                <div class="profile-dropdown">
-                    <button class="profile-btn" id="profileBtn">
-                        <i class="fa-solid fa-user fa-xl"></i>
-                    </button>
-                </div>
                 <!-- Dark Mode Toggle -->
                 <button type="button" class="dark-mode-btn" id="darkModeBtn" onclick="toggleDarkMode(); return false;" title="Switch to Dark Mode">
                     <i id="darkModeIcon" class="fa-solid fa-moon fa-2xl"></i>
@@ -761,171 +768,170 @@ if (!isset($_SESSION['cart'])) {
             <div class="booking-content-wrapper<?php echo (!empty($_SESSION['cart']) && isset($_GET['from_cart'])) ? ' with-cart' : ''; ?>">
                 <!-- Cart Items Column (only show if from cart) -->
                 <?php if (!empty($_SESSION['cart']) && isset($_GET['from_cart'])): ?>
-                <div class="booking-cart-section show">
-                    <h3>Your Order</h3>
-                    <?php
-                    $total = 0;
-                    foreach ($_SESSION['cart'] as $item):
-                        $subtotal = $item['price'] * $item['quantity'];
-                        $total += $subtotal;
-                    ?>
-                        <div class="booking-cart-item">
-                            <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
-                            <div class="booking-cart-item-details">
-                                <div class="booking-cart-item-name"><?php echo htmlspecialchars($item['name']); ?></div>
-                                <div class="booking-cart-item-price">₱<?php echo number_format($item['price'], 0); ?></div>
-                                <div class="booking-cart-item-qty">Qty: <?php echo $item['quantity']; ?></div>
+                    <div class="booking-cart-section show">
+                        <h3>Your Order</h3>
+                        <?php
+                        $total = 0;
+                        foreach ($_SESSION['cart'] as $item):
+                            $subtotal = $item['price'] * $item['quantity'];
+                            $total += $subtotal;
+                        ?>
+                            <div class="booking-cart-item">
+                                <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
+                                <div class="booking-cart-item-details">
+                                    <div class="booking-cart-item-name"><?php echo htmlspecialchars($item['name']); ?></div>
+                                    <div class="booking-cart-item-price">₱<?php echo number_format($item['price'], 0); ?></div>
+                                    <div class="booking-cart-item-qty">Qty: <?php echo $item['quantity']; ?></div>
+                                </div>
                             </div>
+                        <?php endforeach; ?>
+                        <div class="booking-cart-total">
+                            <span>Total:</span>
+                            <span>₱<?php echo number_format($total, 0); ?></span>
                         </div>
-                    <?php endforeach; ?>
-                    <div class="booking-cart-total">
-                        <span>Total:</span>
-                        <span>₱<?php echo number_format($total, 0); ?></span>
                     </div>
-                </div>
                 <?php endif; ?>
-                
+
                 <!-- Left Column: Booking Form -->
                 <div class="booking-form-wrapper">
-                <h2>Reservation Details</h2>
-                <form id="bookingForm">
-                    <div class="form-grid">
-                        <div class="form-group full-width">
-                            <label for="reservationType">Select Reservation Type *</label>
-                            <select id="reservationType" name="reservationType" required>
-                                <option value="">Choose type...</option>
-                                <option value="Studying">Studying</option>
-                                <option value="Event">Event</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="fullName">Full Name *</label>
-                            <input type="text" id="fullName" name="fullName" required placeholder="Juan Dela Cruz">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" required placeholder="juan@example.com">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="persons">Number of Persons *</label>
-                            <select id="persons" name="persons" required>
-                                <option value="">Select...</option>
-                                <?php for($i = 1; $i <= 20; $i++): ?>
-                                    <option value="<?php echo $i; ?>"><?php echo $i; ?> Person<?php echo $i > 1 ? 's' : ''; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="date">Date of Reservation *</label>
-                            <input type="date" id="date" name="date" required min="<?php echo date('Y-m-d'); ?>">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="startTime">Start Time *</label>
-                            <select id="startTime" name="startTime" required>
-                                <option value="">Choose start time...</option>
-                                <option value="13:00">1:00 PM</option>
-                                <option value="14:00">2:00 PM</option>
-                                <option value="15:00">3:00 PM</option>
-                                <option value="16:00">4:00 PM</option>
-                                <option value="17:00">5:00 PM</option>
-                                <option value="18:00">6:00 PM</option>
-                                <option value="19:00">7:00 PM</option>
-                                <option value="20:00">8:00 PM</option>
-                                <option value="21:00">9:00 PM</option>
-                                <option value="22:00">10:00 PM</option>
-                                <option value="23:00">11:00 PM</option>
-                                <option value="00:00">12:00 AM</option>
-                                <option value="01:00">1:00 AM</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="endTime">End Time *</label>
-                            <select id="endTime" name="endTime" required>
-                                <option value="">Choose end time...</option>
-                                <option value="14:00">2:00 PM</option>
-                                <option value="15:00">3:00 PM</option>
-                                <option value="16:00">4:00 PM</option>
-                                <option value="17:00">5:00 PM</option>
-                                <option value="18:00">6:00 PM</option>
-                                <option value="19:00">7:00 PM</option>
-                                <option value="20:00">8:00 PM</option>
-                                <option value="21:00">9:00 PM</option>
-                                <option value="22:00">10:00 PM</option>
-                                <option value="23:00">11:00 PM</option>
-                                <option value="00:00">12:00 AM</option>
-                                <option value="01:00">1:00 AM</option>
-                                <option value="02:00">2:00 AM</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group full-width">
-                            <label for="specialRequests">Special Requests (Optional)</label>
-                            <textarea id="specialRequests" name="specialRequests" placeholder="Any special requirements or preferences..."></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Price Display -->
-                    <div class="price-display">
-                        <p><strong>Rate:</strong> ₱100 per hour</p>
-                        <p><strong>Duration:</strong> <span id="duration">-</span> hour(s)</p>
-                        <p class="total-price">Total: ₱<span id="totalAmount">0</span></p>
-                    </div>
-
-                    <button type="submit" class="btn-primary" id="submitBooking">Continue to Payment</button>
-                </form>
-
-                <!-- Payment Section (Initially Hidden) -->
-                <div class="payment-section" id="paymentSection">
-                    <h3>Complete Your Reservation</h3>
-                    <div class="qr-payment-container">
-                        <div class="qr-code-box">
-                            <h4>Scan QR Code to Pay</h4>
-                            <img src="images/qrcode.png" alt="GCash QR Code" id="qrCodeImage">
-                            <p style="margin-top: 15px; color: #666; font-size: 0.9rem;">
-                                Scan this QR code using GCash to complete payment
-                            </p>
-                        </div>
-
-                        <div class="upload-proof-box">
-                            <h4>Upload Proof of Payment</h4>
-                            <p style="color: #666; margin-bottom: 15px;">
-                                Please upload a screenshot of your payment confirmation
-                            </p>
-                            
-                            <div class="file-upload-wrapper">
-                                <input type="file" id="proofOfPayment" name="proofOfPayment" accept="image/*">
-                                <label for="proofOfPayment" class="file-upload-label">
-                                    <i class="fa-solid fa-cloud-arrow-up"></i> Choose File
-                                </label>
-                                <div class="file-name-display" id="fileName">No file chosen</div>
+                    <h2>Reservation Details</h2>
+                    <form id="bookingForm">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="reservationType">Select Reservation Type *</label>
+                                <select id="reservationType" name="reservationType" required>
+                                    <option value="">Choose type...</option>
+                                    <option value="Studying">Studying</option>
+                                    <option value="Event">Event</option>
+                                </select>
                             </div>
 
-                            <div id="reservationIdDisplay" style="background: #f9fafb; padding: 15px; border-radius: 10px; margin: 15px 0;">
-                                <p style="margin: 0; color: #666; font-size: 0.9rem;">Reservation ID:</p>
-                                <p style="margin: 5px 0 0; font-weight: 700; color: #d4b896; font-size: 1.1rem;" id="resId">-</p>
+                            <div class="form-group">
+                                <label for="fullName">Full Name *</label>
+                                <input type="text" id="fullName" name="fullName" required placeholder="Juan Dela Cruz">
                             </div>
 
-                            <button type="button" class="btn-primary" id="submitPayment" disabled>
-                                Submit Payment Proof
-                            </button>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required placeholder="juan@example.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="persons">Number of Persons *</label>
+                                <select id="persons" name="persons" required>
+                                    <option value="">Select...</option>
+                                    <?php for ($i = 1; $i <= 20; $i++): ?>
+                                        <option value="<?php echo $i; ?>"><?php echo $i; ?> Person<?php echo $i > 1 ? 's' : ''; ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date">Date of Reservation *</label>
+                                <input type="date" id="date" name="date" required min="<?php echo date('Y-m-d'); ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="startTime">Start Time *</label>
+                                <select id="startTime" name="startTime" required>
+                                    <option value="">Choose start time...</option>
+                                    <option value="13:00">1:00 PM</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="15:00">3:00 PM</option>
+                                    <option value="16:00">4:00 PM</option>
+                                    <option value="17:00">5:00 PM</option>
+                                    <option value="18:00">6:00 PM</option>
+                                    <option value="19:00">7:00 PM</option>
+                                    <option value="20:00">8:00 PM</option>
+                                    <option value="21:00">9:00 PM</option>
+                                    <option value="22:00">10:00 PM</option>
+                                    <option value="23:00">11:00 PM</option>
+                                    <option value="00:00">12:00 AM</option>
+                                    <option value="01:00">1:00 AM</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="endTime">End Time *</label>
+                                <select id="endTime" name="endTime" required>
+                                    <option value="">Choose end time...</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="15:00">3:00 PM</option>
+                                    <option value="16:00">4:00 PM</option>
+                                    <option value="17:00">5:00 PM</option>
+                                    <option value="18:00">6:00 PM</option>
+                                    <option value="19:00">7:00 PM</option>
+                                    <option value="20:00">8:00 PM</option>
+                                    <option value="21:00">9:00 PM</option>
+                                    <option value="22:00">10:00 PM</option>
+                                    <option value="23:00">11:00 PM</option>
+                                    <option value="00:00">12:00 AM</option>
+                                    <option value="01:00">1:00 AM</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="specialRequests">Special Requests (Optional)</label>
+                                <textarea id="specialRequests" name="specialRequests" placeholder="Any special requirements or preferences..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Price Display -->
+                        <div class="price-display">
+                            <p><strong>Rate:</strong> ₱100 per hour</p>
+                            <p><strong>Duration:</strong> <span id="duration">-</span> hour(s)</p>
+                            <p class="total-price">Total: ₱<span id="totalAmount">0</span></p>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="submitBooking">Continue to Payment</button>
+                    </form>
+
+                    <!-- Payment Section (Initially Hidden) -->
+                    <div class="payment-section" id="paymentSection">
+                        <h3>Complete Your Reservation</h3>
+                        <div class="qr-payment-container">
+                            <div class="qr-code-box">
+                                <h4>Scan QR Code to Pay</h4>
+                                <img src="images/qrcode.png" alt="GCash QR Code" id="qrCodeImage">
+                                <p style="margin-top: 15px; color: #666; font-size: 0.9rem;">
+                                    Scan this QR code using GCash to complete payment
+                                </p>
+                            </div>
+
+                            <div class="upload-proof-box">
+                                <h4>Upload Proof of Payment</h4>
+                                <p style="color: #666; margin-bottom: 15px;">
+                                    Please upload a screenshot of your payment confirmation
+                                </p>
+
+                                <div class="file-upload-wrapper">
+                                    <input type="file" id="proofOfPayment" name="proofOfPayment" accept="image/*">
+                                    <label for="proofOfPayment" class="file-upload-label">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i> Choose File
+                                    </label>
+                                    <div class="file-name-display" id="fileName">No file chosen</div>
+                                </div>
+
+                                <div id="reservationIdDisplay" style="background: #f9fafb; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                                    <p style="margin: 0; color: #666; font-size: 0.9rem;">Reservation ID:</p>
+                                    <p style="margin: 5px 0 0; font-weight: 700; color: #d4b896; font-size: 1.1rem;" id="resId">-</p>
+                                </div>
+
+                                <button type="button" class="btn-primary" id="submitPayment" disabled>
+                                    Submit Payment Proof
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
 
                 <!-- Right Column: Google Maps Section -->
                 <div class="map-section">
                     <h3><i class="fa-solid fa-location-dot"></i> Find Us Here</h3>
-                    <iframe 
+                    <iframe
                         src="https://www.google.com/maps/embed?pb=!4v1731740000000!6m8!1m7!1sCAoSLEFGMVFpcE1PWjNkdm5HMUJZb2Z1MHRmTUhsRGdYNzBnb1FjOEJqVkVZSWpI!2m2!1d14.0449448!2d121.1559532!3f0!4f0!5f0.7820865974627469"
-                        allowfullscreen="" 
-                        loading="lazy" 
+                        allowfullscreen=""
+                        loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
@@ -968,10 +974,10 @@ if (!isset($_SESSION['cart'])) {
                 <div class="footer-column">
                     <h3 class="footer-heading">Information</h3>
                     <ul class="footer-links">
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#careers">Careers</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="privacy-policy.php">Privacy Policy</a></li>
+                        <li><a href="#" onclick="openAboutModal(event)">About Us</a></li>
+                        <li><a href="#" onclick="openTermsModal(event)">Terms &amp; Conditions</a></li>
+                        <li><a href="#contact">FAQs</a></li>
+                        <li><a href="#" onclick="openPrivacyModal(event)">Privacy Policy</a></li>
                     </ul>
                 </div>
 
@@ -1006,11 +1012,6 @@ if (!isset($_SESSION['cart'])) {
                             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                         </svg>
                     </a>
-                    <a href="#" aria-label="Twitter">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                        </svg>
-                    </a>
                     <a href="#" aria-label="TikTok">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
@@ -1020,6 +1021,572 @@ if (!isset($_SESSION['cart'])) {
             </div>
         </div>
     </footer>
+
+    <!-- About Us Modal -->
+    <div id="aboutModal" class="info-modal">
+        <div class="info-modal-content about-modal-content">
+            <button class="info-modal-close" onclick="closeAboutModal()">&times;</button>
+            <div class="info-modal-header">
+                <img src="images/logoo.png" alt="Logo" class="info-modal-logo">
+                <h2>About The Malvar Bat Cave Cafe</h2>
+                <p>Discover the story behind our late-night sanctuary for the BatStateU community.</p>
+            </div>
+            <div class="info-modal-body about-modal-body">
+                <p>
+                    Welcome to The Malvar Bat Cave Café, your cozy hideout brewed for comfort, creativity, and connection.
+                    Inspired by the unique charm of the Bat Cave name, our café blends warm ambiance, specialty coffee, and
+                    a touch of mystery—creating a space where everyone feels at home.
+                </p>
+                <p>
+                    Established near the Batangas State University - Malvar Campus, The Malvar Bat Cave Cafe was born
+                    from a passion for exceptional coffee and a desire to provide a safe, inspiring space for students,
+                    night owls, and creatives. Our mission centers on delivering comforting brews, hearty bites, and an
+                    ambiance that encourages focus, collaboration, and genuine connection.
+                </p>
+                <p>
+                    We serve premium specialty coffee, handcrafted with care using high-quality beans and perfected by
+                    passionate baristas. From signature blends to ice-cold refreshers, every sip is made to elevate your
+                    day. Pair it with our pastries and treats for the full Bat Cave experience. Beyond serving drinks, we
+                    foster a supportive environment with thoughtful amenities: reliable Wi-Fi, reservation-ready study
+                    pods, extended operating hours, and baristas who remember your favorite order.
+                </p>
+                <p>
+                    Our story began with a simple vision: to build a relaxing haven where every guest can enjoy great
+                    coffee, good conversations, and peaceful moments. Whether you’re studying, chilling with friends, or
+                    taking a break from the noise, The Malvar Bat Cave Café is your perfect spot. We are proud to be
+                    locally owned, sourcing beans and ingredients from trusted Philippine partners to support regional
+                    farmers and artisans. Every visit contributes to a community that uplifts students and entrepreneurs
+                    alike.
+                </p>
+                <p>
+                    Whether you are gearing up for exams, hosting a late-night meetup, or simply craving comfort in a cup,
+                    the Bat Cave is always ready to welcome you home. Thank you for being part of our growing community.
+                    Sit back, breathe, and savor the moment at The Malvar Bat Cave Café.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="termsModal" class="info-modal">
+        <div class="info-modal-content terms-modal-content">
+            <button class="info-modal-close" onclick="closeTermsModal()">&times;</button>
+            <div class="info-modal-header">
+                <img src="images/logoo.png" alt="Logo" class="info-modal-logo">
+                <h2>Terms &amp; Conditions</h2>
+                <p>Please review the terms and conditions for using The Malvar Bat Cave Cafe services.</p>
+            </div>
+            <div class="info-modal-body terms-modal-body">
+                <p class="terms-last-updated"><strong>Last Updated:</strong> November 18, 2025</p>
+
+                <h3>1. General Use</h3>
+                <p>
+                    By accessing or using our website, you confirm that you are at least 18 years old or have permission
+                    from a parent/guardian, and that any information you submit for bookings or orders is accurate and
+                    complete. Placing a booking or order signifies acceptance of these Terms &amp; Conditions and any
+                    policy referenced on this site, including our Privacy Policy.
+                </p>
+
+                <h3>2. Online Pick-Up Orders</h3>
+                <p>
+                    Online orders are strictly for pick-up at the cafe. Orders are confirmed once all required details are
+                    submitted and validated. Please arrive on time—items cannot be held indefinitely. Prices and
+                    availability may change without notice, and we reserve the right to cancel or modify orders if items
+                    are unavailable or if errors are discovered.
+                </p>
+
+                <h3>3. Room Bookings</h3>
+                <p>
+                    All rooms must be booked in advance through our website form. Confirmations depend on availability,
+                    and reservations are held only for a limited grace period from the scheduled time. Late arrivals may
+                    result in released slots during peak demand. Cancellations or rescheduling must follow the booking
+                    policy shown at reservation time, and guests are responsible for any damages or excessive mess during
+                    their stay.
+                </p>
+
+                <h3>4. Payments</h3>
+                <p>
+                    Payments may be required online for pick-up orders or collected in person for room bookings. You agree
+                    to provide valid payment information and settle balances promptly. Proofs of payment must be
+                    verifiable, and The Malvar Bat Cave Cafe is not liable for processing errors caused by third-party
+                    payment systems.
+                </p>
+
+                <h3>5. Safety &amp; Conduct</h3>
+                <p>
+                    We expect all guests to maintain a respectful, quiet environment that supports studying and social
+                    connection. Misbehavior, disruptive conduct, damage to property, or violations of cafe policies may
+                    lead to denied service, cancelled bookings, or removal from the premises.
+                </p>
+
+                <h3>6. Privacy</h3>
+                <p>
+                    We value your privacy. Personal information (name, contact details, booking/order information) is used
+                    solely to process pick-up orders and room reservations, to communicate updates about your requests, and
+                    to improve the overall guest experience. We do not sell or share your data without consent, except as
+                    required by law.
+                </p>
+
+                <h3>7. Liability</h3>
+                <p>
+                    Use of our website and services is at your own risk. The Malvar Bat Cave Cafe is not responsible for
+                    personal injury, loss, or damage to belongings while on the premises, nor for delays or cancellations
+                    caused by unforeseen circumstances such as power outages or severe weather.
+                </p>
+
+                <h3>8. Intellectual Property</h3>
+                <p>
+                    All logos, images, copy, and design assets on this website belong to The Malvar Bat Cave Cafe. Any
+                    unauthorized use, reproduction, or distribution of these materials is strictly prohibited.
+                </p>
+
+                <h3>9. Changes to Terms</h3>
+                <p>
+                    We may update these Terms &amp; Conditions at any time to reflect operational changes or new policies.
+                    Continued use of the website and our services constitutes acceptance of the latest version.
+                </p>
+
+                <h3>10. Contact Us</h3>
+                <p>
+                    For questions about bookings, pick-up orders, or these Terms &amp; Conditions, reach out via
+                    <strong>Email:</strong> info@malvarbatcavecafe.com,
+                    <strong>Phone:</strong> 09636996688, or visit us at Malvar, Batangas State University Area.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="info-modal">
+        <div class="info-modal-content privacy-modal-content">
+            <button class="info-modal-close" onclick="closePrivacyModal()">&times;</button>
+            <div class="info-modal-header">
+                <img src="images/logoo.png" alt="Logo" class="info-modal-logo">
+                <h2>Privacy Policy</h2>
+                <p>Learn how The Malvar Bat Cave Café safeguards your data.</p>
+            </div>
+            <div class="info-modal-body privacy-modal-body">
+                <div class="privacy-header">
+                    <h1>Privacy Policy</h1>
+                    <div class="cafe-name">The Malvar Bat Cave Café</div>
+                    <div class="privacy-dates">
+                        <strong>Effective Date:</strong> January 18, 2025<br>
+                        <strong>Last Updated:</strong> January 18, 2025
+                    </div>
+                </div>
+                <div class="privacy-intro">
+                    The Malvar Bat Cave Café ("we," "our," or "us") is committed to protecting your privacy. This Privacy
+                    Policy explains how we collect, use, store, and protect your personal information when you visit our café,
+                    make reservations, order for pickup, or use our services.<br><br>
+                    <strong>By accessing our services, you agree to the practices described in this policy.</strong>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>1. Information We Collect</h2>
+                    <p>We collect personal information only when necessary for operations, including:</p>
+                    <h3>1.1 Personal Information Provided by You</h3>
+                    <ul>
+                        <li>Full Name</li>
+                        <li>Contact Number</li>
+                        <li>Email Address</li>
+                        <li>Reservation Details (event or study slot)</li>
+                        <li>Order Details for Pickup</li>
+                        <li>Number of participants for events</li>
+                        <li>Preferred time and date</li>
+                    </ul>
+                    <h3>1.2 Automatically Collected Information</h3>
+                    <p>When you visit our website or reservation page:</p>
+                    <ul>
+                        <li>IP Address</li>
+                        <li>Browser type</li>
+                        <li>Device information</li>
+                        <li>Pages viewed</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>2. How We Use Your Information</h2>
+                    <p>We use your data to provide and improve our services, including:</p>
+                    <ul>
+                        <li>Managing event reservations</li>
+                        <li>Managing study area slots</li>
+                        <li>Handling pickup orders</li>
+                        <li>Confirming and updating your reservation status</li>
+                        <li>Communicating important announcements or changes</li>
+                        <li>Improving customer experience</li>
+                        <li>Maintaining security and preventing misuse</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>3. Event &amp; Study Reservations Policy</h2>
+                    <div class="highlight-box">
+                        <h3>3.1 Event Reservation Capacity Rule</h3>
+                        <ul>
+                            <li>Event reservations are allowed only until the first <strong>20 persons</strong> are confirmed.</li>
+                            <li>Once 20 participants are reached, no additional reservations will be accepted until the ongoing event has finished.</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box">
+                        <h3>3.2 Study Area Reservation Rule</h3>
+                        <ul>
+                            <li>Study slots are available as long as the 20-person limit is not yet reached.</li>
+                            <li>A real-time update will indicate whether slots remain open.</li>
+                        </ul>
+                    </div>
+                    <h3>3.3 Reservation Verification</h3>
+                    <p>We may contact you to:</p>
+                    <ul>
+                        <li>Confirm your reservation</li>
+                        <li>Verify event size</li>
+                        <li>Update you about slot availability</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>4. Order for Pickup (No Dine-In)</h2>
+                    <p>When you place an order for pickup, we use your information to:</p>
+                    <ul>
+                        <li>Prepare your order</li>
+                        <li>Notify you when it's ready</li>
+                        <li>Verify identity upon pickup</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>5. Operating Hours</h2>
+                    <div class="highlight-box">
+                        <p><strong>The Malvar Bat Cave Café is open from:</strong></p>
+                        <p class="hours-highlight">⏰ 1:00 PM to 1:00 AM</p>
+                        <p>Any data collected outside these hours (e.g., online reservations) will be processed during operational times.</p>
+                    </div>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>6. Data Storage &amp; Security</h2>
+                    <p>We take appropriate measures to protect your personal information, including:</p>
+                    <ul>
+                        <li>Secure digital storage</li>
+                        <li>Limited access to authorized staff</li>
+                        <li>Encryption where applicable</li>
+                    </ul>
+                    <p><strong>We do not sell, rent, or share your personal data with third parties except when required by law.</strong></p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>7. Your Rights</h2>
+                    <p>You may:</p>
+                    <ul>
+                        <li>Request to view the information we hold about you</li>
+                        <li>Ask for corrections to inaccurate data</li>
+                        <li>Request deletion of your personal information (unless required for recordkeeping)</li>
+                    </ul>
+                    <p>Contact details are provided below.</p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>8. Retention of Information</h2>
+                    <p>We keep your data only as long as necessary for:</p>
+                    <ul>
+                        <li>Reservation and event records</li>
+                        <li>Order fulfillment</li>
+                        <li>Legal or business requirements</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>9. Minors' Privacy</h2>
+                    <p>We do not knowingly collect personal information from individuals under 18 without parental or guardian consent.</p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>10. Changes to This Privacy Policy</h2>
+                    <p>We may update this policy at any time. Any changes will be posted with a new "Last Updated" date.</p>
+                </div>
+
+                <div class="contact-box">
+                    <h2>11. Contact Us</h2>
+                    <p>For questions, concerns, or requests regarding your data, contact us:</p>
+                    <p><strong>The Malvar Bat Cave Café</strong></p>
+                    <p>📍 Malvar, Batangas State University Area</p>
+                    <p>📞 09636996688</p>
+                    <p>📧 info@malvarbatcavecafe.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .info-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        .info-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-modal-content {
+            background: #fff;
+            border-radius: 25px;
+            max-width: 540px;
+            width: 90%;
+            padding: 40px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-modal-content,
+        .terms-modal-content,
+        .privacy-modal-content {
+            max-height: 80vh;
+            overflow-y: auto;
+            max-width: 960px;
+            width: min(960px, 95vw);
+        }
+
+        .info-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 32px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #2b1a12;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+
+        .info-modal-close:hover {
+            color: #c9964c;
+        }
+
+        .info-modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .info-modal-logo {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 15px;
+        }
+
+        .info-modal-header h2 {
+            font-size: 26px;
+            color: #2b1a12;
+            margin-bottom: 8px;
+        }
+
+        .info-modal-header p {
+            color: #6f4e37;
+            font-size: 14px;
+        }
+
+        .info-modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .about-modal-body p {
+            font-size: 14px;
+            color: #6f4e37;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .terms-modal-body h3 {
+            margin-top: 16px;
+            margin-bottom: 6px;
+            font-size: 16px;
+            color: #2b1a12;
+        }
+
+        .terms-modal-body p {
+            font-size: 14px;
+            color: #6f4e37;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .terms-last-updated {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+            color: #c9964c;
+        }
+
+        .privacy-modal-body {
+            color: #2b1a12;
+        }
+
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .privacy-header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .cafe-name {
+            font-weight: 600;
+            color: #6f4e37;
+        }
+
+        .privacy-dates {
+            font-size: 14px;
+            color: #6f4e37;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .privacy-intro {
+            background: #fff7ed;
+            border-left: 4px solid #c9964c;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .privacy-section {
+            margin-bottom: 20px;
+        }
+
+        .privacy-section h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2b1a12;
+        }
+
+        .privacy-section h3 {
+            font-size: 16px;
+            margin: 12px 0 8px;
+            color: #6f4e37;
+        }
+
+        .privacy-section p,
+        .privacy-section ul {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #4a3728;
+        }
+
+        .privacy-section ul {
+            padding-left: 20px;
+        }
+
+        .highlight-box {
+            background: #faf3e0;
+            border: 1px solid #e5d4b5;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .hours-highlight {
+            font-size: 20px;
+            font-weight: 600;
+            color: #c9964c;
+            margin: 15px 0;
+        }
+
+        .contact-box {
+            background: #fff5e1;
+            border: 1px solid #f0d7b4;
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        body.dark-mode .info-modal-content {
+            background: #2b1a12;
+        }
+
+        body.dark-mode .info-modal-header h2 {
+            color: #faf3e0;
+        }
+
+        body.dark-mode .info-modal-header p,
+        body.dark-mode .about-modal-body p,
+        body.dark-mode .terms-modal-body p {
+            color: #d4b896;
+        }
+
+        body.dark-mode .terms-modal-body h3 {
+            color: #faf3e0;
+        }
+
+        body.dark-mode .info-modal-close {
+            color: #faf3e0;
+        }
+
+        body.dark-mode .terms-last-updated {
+            color: #f4d7a1;
+        }
+
+        body.dark-mode .privacy-modal-body {
+            color: #faf3e0;
+        }
+
+        body.dark-mode .privacy-section h2 {
+            color: #faf3e0;
+        }
+
+        body.dark-mode .privacy-section h3,
+        body.dark-mode .privacy-section p,
+        body.dark-mode .privacy-section ul,
+        body.dark-mode .privacy-dates,
+        body.dark-mode .privacy-intro {
+            color: #d4b896;
+        }
+
+        body.dark-mode .privacy-intro,
+        body.dark-mode .highlight-box,
+        body.dark-mode .contact-box {
+            background: #2f2015;
+            border-color: #5a3e24;
+        }
+
+        body.dark-mode .hours-highlight {
+            color: #f4d7a1;
+        }
+    </style>
 
     <!-- Success Modal -->
     <div class="success-modal" id="successModal">
@@ -1043,28 +1610,30 @@ if (!isset($_SESSION['cart'])) {
         // Handle form submission
         document.getElementById('bookingForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const formData = new FormData(this);
-            
+
             try {
                 const response = await fetch('process_booking.php', {
                     method: 'POST',
                     body: formData
                 });
-                
+
                 const result = await response.json();
-                
+
                 if (result.success) {
                     currentReservationId = result.reservation_id;
                     document.getElementById('resId').textContent = currentReservationId;
-                    
+
                     // Show payment section
                     document.getElementById('paymentSection').classList.add('active');
                     document.getElementById('submitBooking').disabled = true;
                     document.getElementById('submitBooking').textContent = 'Awaiting Payment';
-                    
+
                     // Scroll to payment section
-                    document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('paymentSection').scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 } else {
                     alert(result.message);
                 }
@@ -1084,27 +1653,27 @@ if (!isset($_SESSION['cart'])) {
         // Handle payment submission
         document.getElementById('submitPayment').addEventListener('click', async function() {
             const fileInput = document.getElementById('proofOfPayment');
-            
+
             if (!fileInput.files[0]) {
                 alert('Please select a proof of payment file');
                 return;
             }
-            
+
             const formData = new FormData();
             formData.append('proofOfPayment', fileInput.files[0]);
             formData.append('reservation_id', currentReservationId);
-            
+
             this.disabled = true;
             this.textContent = 'Uploading...';
-            
+
             try {
                 const response = await fetch('upload_payment.php', {
                     method: 'POST',
                     body: formData
                 });
-                
+
                 const result = await response.json();
-                
+
                 if (result.success) {
                     document.getElementById('modalReservationId').textContent = currentReservationId;
                     document.getElementById('successModal').classList.add('active');
@@ -1130,11 +1699,11 @@ if (!isset($_SESSION['cart'])) {
         function calculatePrice() {
             const startTime = document.getElementById('startTime').value;
             const endTime = document.getElementById('endTime').value;
-            
+
             if (startTime && endTime) {
                 const start = parseInt(startTime.split(':')[0]);
                 const end = parseInt(endTime.split(':')[0]);
-                
+
                 let hours;
                 if (end <= start) {
                     // Crossing midnight (e.g., 11 PM to 1 AM)
@@ -1142,14 +1711,14 @@ if (!isset($_SESSION['cart'])) {
                 } else {
                     hours = end - start;
                 }
-                
+
                 if (hours <= 0) {
                     document.getElementById('duration').textContent = '-';
                     document.getElementById('totalAmount').textContent = '0';
                     alert('End time must be after start time');
                     return;
                 }
-                
+
                 const total = hours * 100;
                 document.getElementById('duration').textContent = hours;
                 document.getElementById('totalAmount').textContent = total;
@@ -1175,15 +1744,15 @@ if (!isset($_SESSION['cart'])) {
             formData.append('change', change);
 
             fetch('update-cart.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    location.reload();
-                }
-            });
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    }
+                });
         }
 
         function continueBooking() {
@@ -1199,11 +1768,81 @@ if (!isset($_SESSION['cart'])) {
         document.addEventListener('click', function(event) {
             const cartMenu = document.getElementById('cartMenu');
             const cartBtn = document.querySelector('.cart-btn');
-            
+
             if (!cartBtn.contains(event.target) && !cartMenu.contains(event.target)) {
                 cartMenu.classList.remove('active');
             }
         });
+
+        function openAboutModal(event) {
+            if (event) event.preventDefault();
+            const modal = document.getElementById('aboutModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeAboutModal() {
+            const modal = document.getElementById('aboutModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function openTermsModal(event) {
+            if (event) event.preventDefault();
+            const modal = document.getElementById('termsModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeTermsModal() {
+            const modal = document.getElementById('termsModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function openPrivacyModal(event) {
+            if (event) event.preventDefault();
+            const modal = document.getElementById('privacyModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closePrivacyModal() {
+            const modal = document.getElementById('privacyModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        document.getElementById('aboutModal')?.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeAboutModal();
+            }
+        });
+
+        document.getElementById('termsModal')?.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeTermsModal();
+            }
+        });
+
+        document.getElementById('privacyModal')?.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closePrivacyModal();
+            }
+        });
     </script>
 </body>
+
 </html>

@@ -42,7 +42,7 @@ $menuItems = [
         ['name' => 'Matcha Green Tea Frappe', 'price' => 195, 'image' => 'images/matcha green tea frappe.png', 'desc' => 'A refreshing fusion of earthy matcha green tea and creamy milk, perfectly blended and lightly sweetened.'],
         ['name' => 'Strawberries & Cream Frappe', 'price' => 185, 'image' => 'images/strawberries and cream frappe.png', 'desc' => 'Sweet and creamy strawberry goodness in every sip — a refreshing, non-coffee option for a fruity treat.'],
     ],
-    'pastries' => [ 
+    'pastries' => [
         ['name' => 'Banana Bread Slice', 'price' => 85, 'image' => 'images/banana bread.jpg', 'desc' => 'Moist, flavorful, and baked fresh with ripe bananas for that comforting homemade taste. A timeless favorite that pairs perfectly with coffee or tea.'],
         ['name' => 'Buttered Croissant', 'price' => 95, 'image' => 'images/buttered croissantt.jpg', 'desc' => 'Flaky, golden layers of buttery pastry baked to perfection. Simple, elegant, and best enjoyed warm with your favorite brew.'],
         ['name' => 'Red Velvet mini cake', 'price' => 90, 'image' => 'images/redvelvet.png', 'desc' => 'Soft, velvety layers with a hint of cocoa, topped with smooth cream cheese frosting. A sweet, classic indulgence to brighten your day.'],
@@ -756,10 +756,10 @@ $menuItems = [
                 <div class="footer-column">
                     <h3 class="footer-heading">Information</h3>
                     <ul class="footer-links">
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#careers">Careers</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#" onclick="openAboutModal(event)">About Us</a></li>
+                        <li><a href="#" onclick="openTermsModal(event)">Terms &amp; Conditions</a></li>
+                        <li><a href="#contact">FAQs</a></li>
+                        <li><a href="#" onclick="openPrivacyModal(event)">Privacy Policy</a></li>
                     </ul>
                 </div>
 
@@ -795,11 +795,6 @@ $menuItems = [
                             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                         </svg>
                     </a>
-                    <a href="#" aria-label="Twitter">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                        </svg>
-                    </a>
                     <a href="#" aria-label="TikTok">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
@@ -809,6 +804,302 @@ $menuItems = [
             </div>
         </div>
     </footer>
+
+    <!-- About Us Modal -->
+    <div id="aboutModal" class="login-modal">
+        <div class="login-modal-content about-modal-content">
+            <button class="login-modal-close" onclick="closeAboutModal()">&times;</button>
+            <div class="login-modal-header">
+                <img src="images/logoo.png" alt="Logo" class="login-modal-logo">
+                <h2>About The Malvar Bat Cave Cafe</h2>
+                <p>Discover the story behind our late-night sanctuary for the BatStateU community.</p>
+            </div>
+            <div class="login-modal-body about-modal-body">
+                <p>
+                    Welcome to The Malvar Bat Cave Café, your cozy hideout brewed for comfort, creativity, and connection.
+                    Inspired by the unique charm of the Bat Cave name, our café blends warm ambiance, specialty coffee, and
+                    a touch of mystery—creating a space where everyone feels at home.
+                </p>
+                <p>
+                    Established near the Batangas State University - Malvar Campus, The Malvar Bat Cave Cafe was born
+                    from a passion for exceptional coffee and a desire to provide a safe, inspiring space for students,
+                    night owls, and creatives. Our mission centers on delivering comforting brews, hearty bites, and an
+                    ambiance that encourages focus, collaboration, and genuine connection.
+                </p>
+                <p>
+                    We serve premium specialty coffee, handcrafted with care using high-quality beans and perfected by
+                    passionate baristas. From signature blends to ice-cold refreshers, every sip is made to elevate your
+                    day. Pair it with our pastries and treats for the full Bat Cave experience. Beyond serving drinks, we
+                    foster a supportive environment with thoughtful amenities: reliable Wi-Fi, reservation-ready study
+                    pods, extended operating hours, and baristas who remember your favorite order.
+                </p>
+                <p>
+                    Our story began with a simple vision: to build a relaxing haven where every guest can enjoy great
+                    coffee, good conversations, and peaceful moments. Whether you’re studying, chilling with friends, or
+                    taking a break from the noise, The Malvar Bat Cave Café is your perfect spot. We are proud to be
+                    locally owned, sourcing beans and ingredients from trusted Philippine partners to support regional
+                    farmers and artisans. Every visit contributes to a community that uplifts students and entrepreneurs
+                    alike.
+                </p>
+                <p>
+                    Whether you are gearing up for exams, hosting a late-night meetup, or simply craving comfort in a cup,
+                    the Bat Cave is always ready to welcome you home. Thank you for being part of our growing community.
+                    Sit back, breathe, and savor the moment at The Malvar Bat Cave Café.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="termsModal" class="login-modal">
+        <div class="login-modal-content terms-modal-content">
+            <button class="login-modal-close" onclick="closeTermsModal()">&times;</button>
+            <div class="login-modal-header">
+                <img src="images/logoo.png" alt="Logo" class="login-modal-logo">
+                <h2>Terms &amp; Conditions</h2>
+                <p>Please review the terms and conditions for using The Malvar Bat Cave Cafe services.</p>
+            </div>
+            <div class="login-modal-body terms-modal-body">
+                <p class="terms-last-updated"><strong>Last Updated:</strong> November 18, 2025</p>
+
+                <h3>1. General Use</h3>
+                <p>
+                    By accessing or using our website, you confirm that you are at least 18 years old or have permission
+                    from a parent/guardian, and that any information you submit for bookings or orders is accurate and
+                    complete. Placing a booking or order signifies acceptance of these Terms &amp; Conditions and any
+                    policy referenced on this site, including our Privacy Policy.
+                </p>
+
+                <h3>2. Online Pick-Up Orders</h3>
+                <p>
+                    Online orders are strictly for pick-up at the cafe. Orders are confirmed once all required details are
+                    submitted and validated. Please arrive on time—items cannot be held indefinitely. Prices and
+                    availability may change without notice, and we reserve the right to cancel or modify orders if items
+                    are unavailable or if errors are discovered.
+                </p>
+
+                <h3>3. Room Bookings</h3>
+                <p>
+                    All rooms must be booked in advance through our website form. Confirmations depend on availability,
+                    and reservations are held only for a limited grace period from the scheduled time. Late arrivals may
+                    result in released slots during peak demand. Cancellations or rescheduling must follow the booking
+                    policy shown at reservation time, and guests are responsible for any damages or excessive mess during
+                    their stay.
+                </p>
+
+                <h3>4. Payments</h3>
+                <p>
+                    Payments may be required online for pick-up orders or collected in person for room bookings. You agree
+                    to provide valid payment information and settle balances promptly. Proofs of payment must be
+                    verifiable, and The Malvar Bat Cave Cafe is not liable for processing errors caused by third-party
+                    payment systems.
+                </p>
+
+                <h3>5. Safety &amp; Conduct</h3>
+                <p>
+                    We expect all guests to maintain a respectful, quiet environment that supports studying and social
+                    connection. Misbehavior, disruptive conduct, damage to property, or violations of cafe policies may
+                    lead to denied service, cancelled bookings, or removal from the premises.
+                </p>
+
+                <h3>6. Privacy</h3>
+                <p>
+                    We value your privacy. Personal information (name, contact details, booking/order information) is used
+                    solely to process pick-up orders and room reservations, to communicate updates about your requests, and
+                    to improve the overall guest experience. We do not sell or share your data without consent, except as
+                    required by law.
+                </p>
+
+                <h3>7. Liability</h3>
+                <p>
+                    Use of our website and services is at your own risk. The Malvar Bat Cave Cafe is not responsible for
+                    personal injury, loss, or damage to belongings while on the premises, nor for delays or cancellations
+                    caused by unforeseen circumstances such as power outages or severe weather.
+                </p>
+
+                <h3>8. Intellectual Property</h3>
+                <p>
+                    All logos, images, copy, and design assets on this website belong to The Malvar Bat Cave Cafe. Any
+                    unauthorized use, reproduction, or distribution of these materials is strictly prohibited.
+                </p>
+
+                <h3>9. Changes to Terms</h3>
+                <p>
+                    We may update these Terms &amp; Conditions at any time to reflect operational changes or new policies.
+                    Continued use of the website and our services constitutes acceptance of the latest version.
+                </p>
+
+                <h3>10. Contact Us</h3>
+                <p>
+                    For questions about bookings, pick-up orders, or these Terms &amp; Conditions, reach out via
+                    <strong>Email:</strong> info@malvarbatcavecafe.com,
+                    <strong>Phone:</strong> 09636996688, or visit us at Malvar, Batangas State University Area.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="login-modal">
+        <div class="login-modal-content privacy-modal-content">
+            <button class="login-modal-close" onclick="closePrivacyModal()">&times;</button>
+            <div class="login-modal-header">
+                <img src="images/logoo.png" alt="Logo" class="login-modal-logo">
+                <h2>Privacy Policy</h2>
+                <p>Learn how The Malvar Bat Cave Café safeguards your data.</p>
+            </div>
+            <div class="login-modal-body privacy-modal-body">
+                <div class="privacy-header">
+                    <h1>Privacy Policy</h1>
+                    <div class="cafe-name">The Malvar Bat Cave Café</div>
+                    <div class="privacy-dates">
+                        <strong>Effective Date:</strong> January 18, 2025<br>
+                        <strong>Last Updated:</strong> January 18, 2025
+                    </div>
+                </div>
+                <div class="privacy-intro">
+                    The Malvar Bat Cave Café ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, store, and protect your personal information when you visit our café, make reservations, order for pickup, or use our services.<br><br>
+                    <strong>By accessing our services, you agree to the practices described in this policy.</strong>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>1. Information We Collect</h2>
+                    <p>We collect personal information only when necessary for operations, including:</p>
+
+                    <h3>1.1 Personal Information Provided by You</h3>
+                    <ul>
+                        <li>Full Name</li>
+                        <li>Contact Number</li>
+                        <li>Email Address</li>
+                        <li>Reservation Details (event or study slot)</li>
+                        <li>Order Details for Pickup</li>
+                        <li>Number of participants for events</li>
+                        <li>Preferred time and date</li>
+                    </ul>
+
+                    <h3>1.2 Automatically Collected Information</h3>
+                    <p>When you visit our website or reservation page:</p>
+                    <ul>
+                        <li>IP Address</li>
+                        <li>Browser type</li>
+                        <li>Device information</li>
+                        <li>Pages viewed</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>2. How We Use Your Information</h2>
+                    <p>We use your data to provide and improve our services, including:</p>
+                    <ul>
+                        <li>Managing event reservations</li>
+                        <li>Managing study area slots</li>
+                        <li>Handling pickup orders</li>
+                        <li>Confirming and updating your reservation status</li>
+                        <li>Communicating important announcements or changes</li>
+                        <li>Improving customer experience</li>
+                        <li>Maintaining security and preventing misuse</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>3. Event &amp; Study Reservations Policy</h2>
+
+                    <div class="highlight-box">
+                        <h3>3.1 Event Reservation Capacity Rule</h3>
+                        <ul>
+                            <li>Event reservations are allowed only until the first <strong>20 persons</strong> are confirmed.</li>
+                            <li>Once 20 participants are reached, no additional reservations will be accepted until the ongoing event has finished.</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box">
+                        <h3>3.2 Study Area Reservation Rule</h3>
+                        <ul>
+                            <li>Study slots are available as long as the 20-person limit is not yet reached.</li>
+                            <li>A real-time update will indicate whether slots remain open.</li>
+                        </ul>
+                    </div>
+
+                    <h3>3.3 Reservation Verification</h3>
+                    <p>We may contact you to:</p>
+                    <ul>
+                        <li>Confirm your reservation</li>
+                        <li>Verify event size</li>
+                        <li>Update you about slot availability</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>4. Order for Pickup (No Dine-In)</h2>
+                    <p>When you place an order for pickup, we use your information to:</p>
+                    <ul>
+                        <li>Prepare your order</li>
+                        <li>Notify you when it's ready</li>
+                        <li>Verify identity upon pickup</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>5. Operating Hours</h2>
+                    <div class="highlight-box">
+                        <p><strong>The Malvar Bat Cave Café is open from:</strong></p>
+                        <p class="hours-highlight">⏰ 1:00 PM to 1:00 AM</p>
+                        <p>Any data collected outside these hours (e.g., online reservations) will be processed during operational times.</p>
+                    </div>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>6. Data Storage &amp; Security</h2>
+                    <p>We take appropriate measures to protect your personal information, including:</p>
+                    <ul>
+                        <li>Secure digital storage</li>
+                        <li>Limited access to authorized staff</li>
+                        <li>Encryption where applicable</li>
+                    </ul>
+                    <p><strong>We do not sell, rent, or share your personal data with third parties except when required by law.</strong></p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>7. Your Rights</h2>
+                    <p>You may:</p>
+                    <ul>
+                        <li>Request to view the information we hold about you</li>
+                        <li>Ask for corrections to inaccurate data</li>
+                        <li>Request deletion of your personal information (unless required for recordkeeping)</li>
+                    </ul>
+                    <p>Contact details are provided below.</p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>8. Retention of Information</h2>
+                    <p>We keep your data only as long as necessary for:</p>
+                    <ul>
+                        <li>Reservation and event records</li>
+                        <li>Order fulfillment</li>
+                        <li>Legal or business requirements</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>9. Minors' Privacy</h2>
+                    <p>We do not knowingly collect personal information from individuals under 18 without parental or guardian consent.</p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2>10. Changes to This Privacy Policy</h2>
+                    <p>We may update this policy at any time. Any changes will be posted with a new "Last Updated" date.</p>
+                </div>
+
+                <div class="contact-box">
+                    <h2>11. Contact Us</h2>
+                    <p>For questions, concerns, or requests regarding your data, contact us:</p>
+                    <p><strong>The Malvar Bat Cave Café</strong></p>
+                    <p>📍 Malvar, Batangas State University Area</p>
+                    <p>📞 09636996688</p>
+                    <p>📧 info@malvarbatcavecafe.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Login Modal -->
     <div id="loginModal" class="login-modal">
@@ -870,6 +1161,21 @@ $menuItems = [
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
+        .about-modal-content,
+        .terms-modal-content,
+        .privacy-modal-content {
+            max-height: 80vh;
+            overflow-y: auto;
+            max-width: 960px;
+            width: min(960px, 95vw);
+        }
+
+        .about-modal-content,
+        .terms-modal-content {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
         .login-modal-close {
             position: absolute;
             top: 15px;
@@ -913,6 +1219,148 @@ $menuItems = [
             display: flex;
             flex-direction: column;
             gap: 15px;
+        }
+
+        .about-modal-body p {
+            font-size: 14px;
+            color: #6F4E37;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .terms-modal-body h3 {
+            margin-top: 10px;
+            margin-bottom: 6px;
+            font-size: 16px;
+            color: #2B1A12;
+        }
+
+        .terms-modal-body p {
+            font-size: 14px;
+            color: #6F4E37;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .terms-last-updated {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            color: #C9964C;
+        }
+
+        .privacy-modal-body {
+            color: #2B1A12;
+        }
+
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .privacy-header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .cafe-name {
+            font-weight: 600;
+            color: #6F4E37;
+        }
+
+        .privacy-dates {
+            font-size: 14px;
+            color: #6F4E37;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .privacy-intro {
+            background: #FFF7ED;
+            border-left: 4px solid #C9964C;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .privacy-section {
+            margin-bottom: 20px;
+        }
+
+        .privacy-section h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2B1A12;
+        }
+
+        .privacy-section h3 {
+            font-size: 16px;
+            margin: 12px 0 8px;
+            color: #6F4E37;
+        }
+
+        .privacy-section p,
+        .privacy-section ul {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #4A3728;
+        }
+
+        .privacy-section ul {
+            padding-left: 20px;
+        }
+
+        .highlight-box {
+            background: #FAF3E0;
+            border: 1px solid #E5D4B5;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .hours-highlight {
+            font-size: 20px;
+            font-weight: 600;
+            color: #C9964C;
+            margin: 15px 0;
+        }
+
+        .contact-box {
+            background: #FFF5E1;
+            border: 1px solid #F0D7B4;
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .about-modal-body p {
+            font-size: 14px;
+            color: #6F4E37;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .terms-modal-body h3 {
+            margin-top: 10px;
+            margin-bottom: 6px;
+            font-size: 16px;
+            color: #2B1A12;
+        }
+
+        .terms-modal-body p {
+            font-size: 14px;
+            color: #6F4E37;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .terms-last-updated {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            color: #C9964C;
         }
 
         .login-option-card {
@@ -961,8 +1409,13 @@ $menuItems = [
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes slideUp {
@@ -970,6 +1423,7 @@ $menuItems = [
                 transform: translateY(50px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -986,7 +1440,9 @@ $menuItems = [
         }
 
         body.dark-mode .login-modal-header p,
-        body.dark-mode .login-option-content p {
+        body.dark-mode .login-option-content p,
+        body.dark-mode .about-modal-body p,
+        body.dark-mode .terms-modal-body p {
             color: #D4B896;
         }
 
@@ -1007,13 +1463,61 @@ $menuItems = [
         body.dark-mode .login-modal-close:hover {
             color: #C9964C;
         }
+
+        body.dark-mode .terms-modal-body h3 {
+            color: #FAF3E0;
+        }
+
+        body.dark-mode .terms-last-updated {
+            color: #F4D7A1;
+        }
+
+        body.dark-mode .privacy-modal-body {
+            color: #FAF3E0;
+        }
+
+        body.dark-mode .privacy-section h2 {
+            color: #FAF3E0;
+        }
+
+        body.dark-mode .privacy-section h3,
+        body.dark-mode .privacy-section p,
+        body.dark-mode .privacy-section ul,
+        body.dark-mode .privacy-dates,
+        body.dark-mode .privacy-intro {
+            color: #D4B896;
+        }
+
+        body.dark-mode .privacy-intro,
+        body.dark-mode .highlight-box,
+        body.dark-mode .contact-box {
+            background: #2F2015;
+            border-color: #5A3E24;
+        }
+
+        body.dark-mode .hours-highlight {
+            color: #F4D7A1;
+        }
+
+        body.dark-mode .about-modal-body p,
+        body.dark-mode .terms-modal-body p {
+            color: #D4B896;
+        }
+
+        body.dark-mode .terms-modal-body h3 {
+            color: #FAF3E0;
+        }
+
+        body.dark-mode .terms-last-updated {
+            color: #F4D7A1;
+        }
     </style>
 
     <script>
         function toggleCart() {
             const menu = document.getElementById('cartMenu');
             const cartItems = <?php echo count($_SESSION['cart']); ?>;
-            
+
             // Show login modal if cart has items
             if (cartItems > 0) {
                 showLoginModal();
@@ -1048,10 +1552,79 @@ $menuItems = [
             menu.classList.add('active');
         }
 
+        function openAboutModal(event) {
+            if (event) event.preventDefault();
+            const modal = document.getElementById('aboutModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeAboutModal() {
+            const modal = document.getElementById('aboutModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function openTermsModal(event) {
+            if (event) event.preventDefault();
+            const modal = document.getElementById('termsModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeTermsModal() {
+            const modal = document.getElementById('termsModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function openPrivacyModal(event) {
+            if (event) event.preventDefault();
+            const modal = document.getElementById('privacyModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closePrivacyModal() {
+            const modal = document.getElementById('privacyModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
         // Close modal when clicking outside
         document.getElementById('loginModal')?.addEventListener('click', function(event) {
             if (event.target === this) {
                 closeLoginModal();
+            }
+        });
+
+        document.getElementById('aboutModal')?.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeAboutModal();
+            }
+        });
+
+        document.getElementById('termsModal')?.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeTermsModal();
+            }
+        });
+
+        document.getElementById('privacyModal')?.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closePrivacyModal();
             }
         });
 
@@ -1114,39 +1687,39 @@ $menuItems = [
         // Size Selection Functionality
         document.addEventListener('DOMContentLoaded', function() {
             const sizeOptions = document.querySelectorAll('.size-option');
-            
+
             sizeOptions.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
+
                     // Get the parent card container
                     const card = this.closest('.group');
                     const siblingButtons = card.querySelectorAll('.size-option');
-                    
+
                     // Remove active state from all size buttons in this card
                     siblingButtons.forEach(btn => {
                         btn.classList.remove('active');
                         btn.style.backgroundColor = '#FAF3E0';
                         btn.style.color = '';
                     });
-                    
+
                     // Add active state to clicked button
                     this.classList.add('active');
                     this.style.backgroundColor = '#C9964C';
                     this.style.color = 'white';
-                    
+
                     // Update hidden form inputs
                     const form = card.querySelector('form');
                     const nameInput = form.querySelector('.product-name-input');
                     const priceInput = form.querySelector('.product-price-input');
-                    
+
                     const size = this.getAttribute('data-size');
                     const price = this.getAttribute('data-price');
                     const baseName = nameInput.value.replace(/ \(Short\)| \(Tall\)| \(Grande\)/g, '');
-                    
+
                     // Capitalize first letter of size
                     const sizeFormatted = size.charAt(0).toUpperCase() + size.slice(1);
-                    
+
                     nameInput.value = baseName + ' (' + sizeFormatted + ')';
                     priceInput.value = price;
                 });
